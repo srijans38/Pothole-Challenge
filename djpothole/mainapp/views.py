@@ -23,10 +23,10 @@ def changePass(request):
 
 
 def index(request):
-    context = {'user': UData}
+    context = {'user': UData.objects.first()}
 
     return render(
         request,
-        'index.html',
+        'mainapp/index.html',
         context=context,
     )
