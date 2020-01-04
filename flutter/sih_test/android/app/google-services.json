@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "110675265148",
+    "firebase_url": "https://pot-hole-494e7.firebaseio.com",
+    "project_id": "pot-hole-494e7",
+    "storage_bucket": "pot-hole-494e7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:110675265148:android:4cc3366ca4a08a52f26bf9",
+        "android_client_info": {
+          "package_name": "com.example.sih_test"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "110675265148-gjl3glpag8qpsdd5966cjrqjq4bqvf56.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC7loPsIKl89Tu0EKVWWdcp8KK9Ct3CHj4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "110675265148-gjl3glpag8qpsdd5966cjrqjq4bqvf56.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
