@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 
 
 class UData(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE,related_name='u')
     resign_date = models.DateTimeField(null=True, blank=True)
 
     region = models.CharField(max_length=128)

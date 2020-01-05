@@ -16,9 +16,8 @@
      https://firebase.google.com/docs/web/setup#available-libraries -->
     <script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-analytics.js"></script>
     <script>
-      var users = "{{ user.region }}";
+      var users = "{{ user.u.region }}";
     </script>
-    {{user}}
     <script src="{% static 'js/firebase.js' %}"></script>
   </body>
 </html>
