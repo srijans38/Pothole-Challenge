@@ -14,3 +14,6 @@ class UData(models.Model):
 
     def __str__(self):
         return str(self.user)
+
+    def update(self):
+        self.ever_logged_in = True
