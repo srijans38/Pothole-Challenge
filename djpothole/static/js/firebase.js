@@ -23,11 +23,13 @@ var firebaseConfig = {
         return(reports.region.toLowerCase().includes(users.toLowerCase()))
 
      })
-    
+    filteredArray.sort((a,b)=>{
+        return a.Occurence-b.Occurence
+    })
 
     a.innerHTML= "";
     filteredArray.forEach((data) => {
-        a.innerHTML += `<h1>${data.region}</h1>`
+        a.innerHTML += `<h1>${data.Occurence}</h1>`
     })
 });
 
