@@ -8,19 +8,17 @@
     <title>Document</title>
   </head>
   <body>
-  <div id="test">
-
-    </div>
+    <div id="test"></div>
     <script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-firestore.js"></script>
 
-     <!-- TODO: Add SDKs for Firebase products that you want to use
+    <!-- TODO: Add SDKs for Firebase products that you want to use
      https://firebase.google.com/docs/web/setup#available-libraries -->
     <script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-analytics.js"></script>
     <script>
-      var users = "{{ user.region }}"
-
+      var users = "{{ user.region }}";
     </script>
+    {{user}}
     <script src="{% static 'js/firebase.js' %}"></script>
   </body>
 </html>
