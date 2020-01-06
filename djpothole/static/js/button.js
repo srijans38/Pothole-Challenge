@@ -1,5 +1,5 @@
-const butt=()=>{
-var firebaseConfig = {
+const butt = () => {
+  var firebaseConfig = {
     apiKey: "AIzaSyAdyRhmquuWcLqF5F9xFhiwfvRsjvWnEtc",
     authDomain: "sih-test-8c936.firebaseapp.com",
     databaseURL: "https://sih-test-8c936.firebaseio.com",
@@ -10,9 +10,9 @@ var firebaseConfig = {
   };
   // Initialize Firebase
   var db = firebase.firestore();
-  var x=db.collection("reports").doc("l8bSyc0AZdlAYBfvVkOJ");
+  var x = db.collection("reports").doc(id);
   return x.update({
-    region:"raipurr"
-})
-console.log("a");
-}
+    status: "Working"
+  });
+  console.log("a");
+};
