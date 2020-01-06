@@ -19,15 +19,10 @@ db.collection("reports")
       const d = doc;
       documents.push(d);
     });
-    console.log(documents[0]);
     currentReport = documents.filter(docu => {
       return docu.id.includes(id);
     });
-    console.log(currentReport);
     if (currentReport.length) {
-    } else {
-      window.location.href = "error/pagenotfound";
-    }
     var image = document.getElementById("image");
     var landmark = document.getElementById("landmark");
     var location = document.getElementById("location");
@@ -60,4 +55,8 @@ db.collection("reports")
     timestamp.appendChild(timestampchild);
     uidchild.innerHTML = currentReport[0].data().uid;
     uid.appendChild(uidchild);
+    } else {
+      window.location.href = "error/pagenotfound";
+    }
+    
   });

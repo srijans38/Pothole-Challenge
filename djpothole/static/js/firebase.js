@@ -20,7 +20,6 @@ db.collection("reports")
       documents.push(d);
     });
     var a = document.getElementById("test");
-    console.log(documents[0]);
     var filteredDocuments = documents.filter(docu => {
       return docu
         .data()
@@ -30,7 +29,6 @@ db.collection("reports")
     filteredDocuments.sort((a, b) => {
       return b.data().occurrence - a.data().occurrence;
     });
-    console.log(filteredDocuments[0]);
     a.innerHTML = "";
     filteredDocuments.forEach(data => {
       var li = document.createElement("a");
