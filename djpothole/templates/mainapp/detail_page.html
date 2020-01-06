@@ -24,8 +24,12 @@
     <div id="uid"></div>
     <script src="{% static 'js/button.js' %}"></script>
 
-    <button onclick="workingButton()" id="accept">ACCEPT REPORT</button>
-    <button onclick="completeButton()" id="complete">COMPLETE REPORT</button>
+    <button onclick="workingButton(); dis()" id="accept" type="submit">
+      ACCEPT REPORT
+    </button>
+    <button onclick="completeButton(); dis()" id="complete" type="submit">
+      COMPLETE REPORT
+    </button>
   </body>
   {% else %}
   <script>

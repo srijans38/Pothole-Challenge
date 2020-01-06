@@ -8,8 +8,7 @@ var firebaseConfig = {
   appId: "1:209924411187:web:2d1279bbd788bd2351f846"
 };
 
-var stat="";
-
+var stat = "";
 
 const workingButton = () => {
   var db = firebase.firestore();
@@ -35,14 +34,14 @@ const dis = () => {
     .doc(id)
     .onSnapshot(querySnapshot => {
       stat = querySnapshot.data().status;
+      if (stat == "Working") {
+        accept.disabled = true;
+      } else if (stat == "Completed") {
+        complete.disabled = true;
+        accept.disabled = true;
+      } else {
+        complete.disabled = false;
+        accept.disabled = false;
+      }
     });
-  if (stat == "Working") {
-    accept.disabled = true;
-  }
-  console.log(stat);
-  if (stat == "Completed") {
-    complete.disabled = true;
-  }
 };
-
-dis();
