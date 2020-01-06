@@ -14,5 +14,4 @@ var firebaseConfig = {
   return x.update({
     region:"raipurr"
 })
-console.log("a");
 }
