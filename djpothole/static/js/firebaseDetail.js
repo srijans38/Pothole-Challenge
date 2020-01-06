@@ -56,5 +56,4 @@ db.collection("reports")
     } else {
       window.location.href = "error/pagenotfound";
     }
-    
   });

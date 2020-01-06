@@ -120,10 +120,11 @@ class _SignupEmailState extends State<SignupEmail> {
                           if (error.code == 'ERROR_EMAIL_ALREADY_IN_USE') {
                             showSnackbar(context,
                                 'The email address is already in use by another account. Please try again or sign in.');
-                          }
-                          if (error.code == 'ERROR_WEAK_PASSWORD') {
+                          } else if (error.code == 'ERROR_WEAK_PASSWORD') {
                             showSnackbar(context,
                                 'Password should be at least 6 characters. Please try again.');
+                          } else {
+                            showSnackbar(context, error.code.toString());
                           }
                         });
                       },
