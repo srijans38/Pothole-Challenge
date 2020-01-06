@@ -23,6 +23,10 @@ Future<FirebaseUser> signInWithGoogle() async {
   return user;
 }
 
+Future signOutWithGoogle() async {
+  _googleSignIn.signOut();
+}
+
 class PhoneSignInSection extends StatefulWidget {
   PhoneSignInSection();
 
