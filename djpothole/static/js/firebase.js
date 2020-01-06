@@ -1,4 +1,4 @@
-var firebaseConfig ={
+var firebaseConfig = {
   apiKey: "AIzaSyAdyRhmquuWcLqF5F9xFhiwfvRsjvWnEtc",
   authDomain: "sih-test-8c936.firebaseapp.com",
   databaseURL: "https://sih-test-8c936.firebaseio.com",
@@ -35,5 +35,6 @@ fdb.where("status","in",['Reported','Working'])
       li.innerHTML = `<h1>${data.data().occurrence}</h1>`;
       li.href = "" + data.id;
       a.appendChild(li);
-    });
-  });
+    })
+  })
+
