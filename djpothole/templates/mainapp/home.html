@@ -1,0 +1,26 @@
+{% extends 'base.html' %} {% load static %} {% block title %}Home{% endblock %}
+{% block content %} {% if user.is_authenticated %}
+<script>
+  var b = "{{user.u.ever_logged_in}}";
+  if (b == "False") {
+    window.location.href = "{% url 'password_change' %}";
+  }
+</script>
+<div class="jumbotron">
+  Hi {{ user.username }}!
+  <p><a href="{% url 'password_change' %}">Change Password</a></p>
+  <p><a href="{% url 'logout' %}">logout</a></p>
+</div>
+<div class="list-group">
+  <div id="test" onload="setList()"></div>
+</div>
+<script>
+  var user = "{{ user.u.region }}";
+</script>
+
+<script src="{% static 'js/firebase.js' %}"></script>
+{% else %}
+<script>
+  window.location.href = "{% url 'login' %}";
+</script>
+{% endif %} {% endblock %}

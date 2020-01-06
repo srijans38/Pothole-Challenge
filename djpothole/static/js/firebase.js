@@ -11,22 +11,30 @@ var firebaseConfig = {
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 var db = firebase.firestore();
-db.collection("reports").onSnapshot(querySnapshot => {
-  const reportArray = [];
-  querySnapshot.forEach(doc => {
-    const data = doc.data();
-    reportArray.push(data);
+db.collection("reports")
+  .get()
+  .then(querySnapshot => {
+    const documents = [];
+    querySnapshot.forEach(doc => {
+      const d = doc;
+      documents.push(d);
+    });
+    var a = document.getElementById("test");
+    var filteredDocuments = documents.filter(docu => {
+      return docu
+        .data()
+        .region.toLowerCase()
+        .includes(user.toLowerCase());
+    });
+    filteredDocuments.sort((a, b) => {
+      return b.data().occurrence - a.data().occurrence;
+    });
+    a.innerHTML = "";
+    filteredDocuments.forEach(data => {
+      var li = document.createElement("a");
+      li.className = "list-group-item list-group-item-action";
+      li.innerHTML = `<h1>${data.data().occurrence}</h1>`;
+      li.href = "" + data.id;
+      a.appendChild(li);
+    });
   });
-  var a = document.getElementById("test");
-  var filteredArray = reportArray.filter(reports => {
-    return reports.region.toLowerCase().includes(users.toLowerCase());
-  });
-  filteredArray.sort((b, a) => {
-    return a.occurrence - b.occurrence;
-  });
-
-  a.innerHTML = "";
-  filteredArray.forEach(data => {
-    a.innerHTML += `<h1>${data.occurrence}</h1>`;
-  });
-});
