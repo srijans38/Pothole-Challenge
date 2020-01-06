@@ -1,5 +1,5 @@
-{% extends 'base.html' %} {% load static %}
-{% block title %}Home{% endblock %} {% block content %} {% if user.is_authenticated %}
+{% extends 'base.html' %} {% load static %} {% block title %}Home{% endblock %}
+{% block content %} {% if user.is_authenticated %}
 <script>
   var b = "{{user.u.ever_logged_in}}";
   if (b == "False") {
@@ -11,7 +11,9 @@
   <p><a href="{% url 'password_change' %}">Change Password</a></p>
   <p><a href="{% url 'logout' %}">logout</a></p>
 </div>
-<div id="test"></div>
+<div class="list-group">
+  <div id="test"></div>
+</div>
 <script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-firestore.js"></script>
 
@@ -21,6 +23,7 @@
 <script>
   var users = "{{ user.u.region }}";
 </script>
+
 <script src="{% static 'js/firebase.js' %}"></script>
 {% else %}
 <script>

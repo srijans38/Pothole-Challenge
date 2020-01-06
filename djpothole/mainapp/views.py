@@ -2,27 +2,13 @@ from django.shortcuts import render
 from .models import UData
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
-from django.views.generic import View, TemplateView
+from django.views.generic import View, TemplateView, DetailView
 from django.http import HttpResponse
 # Create your views here.
 
 
-def loginPage(request):
-    context = {'user': UData}
-    return render(
-        request,
-        'mainapp/login.html',
-        context=context,
-    )
-
-
-def changePass(request):
-    context = {'user': UData}
-    return render(
-        request,
-        'mainapp/changePass.html',
-        context=context,
-    )
+def detail_page(req, id):
+    return render(req, 'mainapp/detail_page.html')
 
 
 @method_decorator(login_required, name="dispatch")

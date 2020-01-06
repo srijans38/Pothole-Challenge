@@ -11,22 +11,28 @@ var firebaseConfig = {
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 var db = firebase.firestore();
-db.collection("reports").onSnapshot(querySnapshot => {
-  const reportArray = [];
-  querySnapshot.forEach(doc => {
-    const data = doc.data();
-    reportArray.push(data);
-  });
-  var a = document.getElementById("test");
-  var filteredArray = reportArray.filter(reports => {
-    return reports.region.toLowerCase().includes(users.toLowerCase());
-  });
-  filteredArray.sort((b, a) => {
-    return a.occurrence - b.occurrence;
-  });
+db.collection("reports")
+  .get()
+  .then(querySnapshot => {
+    const reportArray = [];
+    querySnapshot.forEach(doc => {
+      const data = doc.data();
+      reportArray.push(data);
+    });
+    var a = document.getElementById("test");
+    var filteredArray = reportArray.filter(reports => {
+      return reports.region.toLowerCase().includes(users.toLowerCase());
+    });
+    filteredArray.sort((b, a) => {
+      return a.occurrence - b.occurrence;
+    });
 
-  a.innerHTML = "";
-  filteredArray.forEach(data => {
-    a.innerHTML += `<h1>${data.occurrence}</h1>`;
+    a.innerHTML = "";
+    filteredArray.forEach(data => {
+      var li = document.createElement("a");
+      li.className = "list-group-item list-group-item-action";
+      li.innerHTML = `<h1>${data.uid}</h1>`;
+      li.href = "" + data.uid;
+      a.appendChild(li);
+    });
   });
-});
