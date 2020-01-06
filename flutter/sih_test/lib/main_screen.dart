@@ -1,19 +1,22 @@
+import 'package:camera/camera.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:sih_test/auth.dart';
 import 'package:sih_test/screens/login_screen.dart';
+import 'package:sih_test/screens/take_picture_screen.dart';
 
 FirebaseAuth _auth = FirebaseAuth.instance;
 GoogleSignIn _googleSignIn = GoogleSignIn();
 
-class Test extends StatefulWidget {
+class MainScreen extends StatefulWidget {
   @override
-  _TestState createState() => _TestState();
+  _MainScreenState createState() => _MainScreenState();
 }
 
-class _TestState extends State<Test> {
+class _MainScreenState extends State<MainScreen> {
   String email = "";
+  CameraDescription camera;
 
   @override
   void initState() {
@@ -22,7 +25,14 @@ class _TestState extends State<Test> {
       setState(() {
         email = user.email;
       });
+      getCameras().then((cameras) {
+        camera = cameras.first;
+      });
     });
+  }
+
+  Future<List<CameraDescription>> getCameras() async {
+    return await availableCameras();
   }
 
   @override
@@ -44,6 +54,19 @@ class _TestState extends State<Test> {
                       (Route route) => false);
                 });
               },
+              child: Text('Sign out'),
+            ),
+            RaisedButton(
+              onPressed: (camera != null)
+                  ? () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => TakePictureScreen(
+                                    camera: camera,
+                                  )));
+                    }
+                  : () {},
               child: Text('Sign out'),
             ),
           ],

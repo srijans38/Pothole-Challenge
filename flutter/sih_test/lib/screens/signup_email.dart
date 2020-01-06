@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:sih_test/screens/text_field.dart';
 
 import '../icon_button.dart';
-import '../test.dart';
+import '../main_screen.dart';
 
 FirebaseAuth _auth = FirebaseAuth.instance;
 
@@ -113,8 +113,10 @@ class _SignupEmailState extends State<SignupEmail> {
                             .createUserWithEmailAndPassword(
                                 email: email, password: password)
                             .then((AuthResult result) {
-                          Navigator.push(context,
-                              MaterialPageRoute(builder: (context) => Test()));
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => MainScreen()));
                         }).catchError((error, stackTrace) {
                           print(error);
                           if (error.code == 'ERROR_EMAIL_ALREADY_IN_USE') {

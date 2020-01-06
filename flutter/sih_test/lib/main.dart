@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:sih_test/main_screen.dart';
 import 'package:sih_test/screens/login_screen.dart';
-import 'package:sih_test/test.dart';
 
 FirebaseAuth _auth = FirebaseAuth.instance;
 
@@ -31,7 +31,7 @@ class _MyAppState extends State<MyApp> {
     _auth.currentUser().then((FirebaseUser user) {
       if (user != null) {
         setState(() {
-          home = Test();
+          home = MainScreen();
         });
       } else {
         setState(() {

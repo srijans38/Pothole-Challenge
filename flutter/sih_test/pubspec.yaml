@@ -25,6 +25,10 @@ dependencies:
   google_sign_in:
   flare_flutter:
   flare_loading:
+  camera:
+  path_provider:
+  path:
+  firebase_storage:
 
 
   # The following adds the Cupertino Icons font to your application.

@@ -1,8 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:sih_test/main_screen.dart';
 import 'package:sih_test/screens/signup_email.dart';
 import 'package:sih_test/screens/text_field.dart';
-import 'package:sih_test/test.dart';
 
 import '../icon_button.dart';
 
@@ -114,8 +114,10 @@ class _LoginEmailState extends State<LoginEmail> {
                             .signInWithEmailAndPassword(
                                 email: email, password: password)
                             .then((AuthResult result) {
-                          Navigator.push(context,
-                              MaterialPageRoute(builder: (context) => Test()));
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => MainScreen()));
                         }).catchError(
                           (error, stackTrace) {
                             print(error);

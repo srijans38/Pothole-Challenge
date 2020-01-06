@@ -2,8 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:sih_test/anim.dart';
 import 'package:sih_test/auth.dart';
+import 'package:sih_test/main_screen.dart';
 import 'package:sih_test/screens/login_email.dart';
-import 'package:sih_test/test.dart';
 
 import '../icon_button.dart';
 
@@ -108,7 +108,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) => Test()));
+                                        builder: (context) => MainScreen()));
                               });
                             },
                             color: Color(0xff4285f4),
