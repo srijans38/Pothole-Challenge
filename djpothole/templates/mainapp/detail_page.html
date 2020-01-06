@@ -1,11 +1,32 @@
-{% extends 'base.html' %}
+{% extends 'base.html' %} {% load static %}{% block content %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Document</title>
+    <title>Detail</title>
   </head>
-  <body></body>
+  <body>
+    {% if user.is_authenticated %}
+    <script>
+      var id = "{{ id }}";
+    </script>
+    <h1>{{ id }}</h1>
+    <script src="{% static 'js/firebaseDetail.js' %}"></script>
+    <div id="image"></div>
+    <div id="landmark"></div>
+    <div id="location"></div>
+    <div id="occurrence"></div>
+    <div id="region"></div>
+    <div id="status"></div>
+    <div id="timestamp"></div>
+    <div id="uid"></div>
+  </body>
+  {% else %}
+  <script>
+    window.location.href = "{% url 'login' %}";
+  </script>
+  {% endif %}
 </html>
+{% endblock %}

@@ -9,7 +9,7 @@
       crossorigin="anonymous"
     />
 
-    <title>{% block title %}Welcome{% endblock %}</title>
+    <title>{% block title %}{% endblock %}</title>
   </head>
   <body>
     <div class="container">
@@ -17,6 +17,12 @@
         <div class="col-8">
           <hr class="mt-0 mb-4" />
           <main>
+            <script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-app.js"></script>
+            <script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-firestore.js"></script>
+
+            <!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+            <script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-analytics.js"></script>
             {% block content %} {% endblock %}
           </main>
         </div>

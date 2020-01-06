@@ -6,5 +6,7 @@ app_name = 'mainapp'
 urlpatterns = [
     path('home/', views.HomeView.as_view(), name='home'),
     path('firstlogin/', views.update_ever_logged_in, name='firstLogin'),
-    path('home/<int:id>', views.detail_page, name='detail')
+    path('home/<str:id>', views.detail_page, name='detail'),
+    path('home/error/pagenotfound/', views.page_not_found,
+         name="pageNotFound"),
 ]

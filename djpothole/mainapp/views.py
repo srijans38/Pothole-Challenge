@@ -7,8 +7,13 @@ from django.http import HttpResponse
 # Create your views here.
 
 
+def page_not_found(req):
+    return render(req, 'mainapp/page_not_found.html')
+
+
 def detail_page(req, id):
-    return render(req, 'mainapp/detail_page.html')
+    context = {'id': id}
+    return render(req, 'mainapp/detail_page.html', context=context)
 
 
 @method_decorator(login_required, name="dispatch")
