@@ -122,10 +122,11 @@ class _LoginEmailState extends State<LoginEmail> {
                             if (error.code == 'ERROR_WRONG_PASSWORD') {
                               showSnackbar(
                                   context, 'Wrong Password. Please Try Again');
-                            }
-                            if (error.code == 'ERROR_USER_NOT_FOUND') {
+                            } else if (error.code == 'ERROR_USER_NOT_FOUND') {
                               showSnackbar(context,
                                   'Wrong Username. Please Try Again or Sign Up');
+                            } else {
+                              showSnackbar(context, error.code.toString());
                             }
                           },
                         );
