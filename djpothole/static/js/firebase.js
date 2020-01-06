@@ -12,8 +12,7 @@ var firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 var db = firebase.firestore();
 db.collection("reports")
-  .get()
-  .then(querySnapshot => {
+  .onSnapshot(querySnapshot => {
     const documents = [];
     querySnapshot.forEach(doc => {
       const d = doc;

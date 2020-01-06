@@ -12,6 +12,7 @@
     <script>
       var id = "{{ id }}";
     </script>
+    <script src="{% static 'js/button.js' %}"></script>
     <h1>{{ id }}</h1>
     <script src="{% static 'js/firebaseDetail.js' %}"></script>
     <div id="image"></div>
@@ -22,6 +23,7 @@
     <div id="status"></div>
     <div id="timestamp"></div>
     <div id="uid"></div>
+    <button onclick=butt()>ACCEPT REPORT</button>
   </body>
   {% else %}
   <script>

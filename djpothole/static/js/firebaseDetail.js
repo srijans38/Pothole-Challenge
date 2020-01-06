@@ -1,19 +1,17 @@
-var firebaseConfig = {
-  apiKey: "AIzaSyDhjN-qSOcfwySiePD4q9b5-wvCrNgluX8",
-  authDomain: "pot-hole-494e7.firebaseapp.com",
-  databaseURL: "https://pot-hole-494e7.firebaseio.com",
-  projectId: "pot-hole-494e7",
-  storageBucket: "pot-hole-494e7.appspot.com",
-  messagingSenderId: "110675265148",
-  appId: "1:110675265148:web:887f00855ebb84d7f26bf9",
-  measurementId: "G-K4RTXTSKRG"
+var firebaseConfig ={
+  apiKey: "AIzaSyAdyRhmquuWcLqF5F9xFhiwfvRsjvWnEtc",
+  authDomain: "sih-test-8c936.firebaseapp.com",
+  databaseURL: "https://sih-test-8c936.firebaseio.com",
+  projectId: "sih-test-8c936",
+  storageBucket: "sih-test-8c936.appspot.com",
+  messagingSenderId: "209924411187",
+  appId: "1:209924411187:web:2d1279bbd788bd2351f846"
 };
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 var db = firebase.firestore();
 db.collection("reports")
-  .get()
-  .then(querySnapshot => {
+  .get().then(querySnapshot => {
     const documents = [];
     querySnapshot.forEach(doc => {
       const d = doc;
@@ -43,7 +41,7 @@ db.collection("reports")
     image.appendChild(imagechild);
     landmarkchild.innerHTML = currentReport[0].data().landmark;
     landmark.appendChild(landmarkchild);
-    locationchild.innerHTML = currentReport[0].data().location;
+    locationchild.innerHTML = currentReport[0].data().location.latitude+"  "+currentReport[0].data().location.longitude;
     location.appendChild(locationchild);
     occurrencechild.innerHTML = currentReport[0].data().occurrence;
     occurrence.appendChild(occurrencechild);
@@ -51,7 +49,7 @@ db.collection("reports")
     region.appendChild(regionchild);
     statuschild.innerHTML = currentReport[0].data().status;
     status.appendChild(statuschild);
-    timestampchild.innerHTML = currentReport[0].data().timestamp;
+    timestampchild.innerHTML = currentReport[0].data().timestamp.toDate().toString();
     timestamp.appendChild(timestampchild);
     uidchild.innerHTML = currentReport[0].data().uid;
     uid.appendChild(uidchild);
