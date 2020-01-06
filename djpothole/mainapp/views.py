@@ -26,8 +26,8 @@ def changePass(request):
 
 
 @method_decorator(login_required, name="dispatch")
-class IndexView(TemplateView):
-    template_name = "mainapp/index.html"
+class HomeView(TemplateView):
+    template_name = "mainapp/home.html"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

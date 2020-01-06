@@ -1,0 +1,29 @@
+{% extends 'base.html' %} {% load static %}
+{% block title %}Home{% endblock %} {% block content %} {% if user.is_authenticated %}
+<script>
+  var b = "{{user.u.ever_logged_in}}";
+  if (b == "False") {
+    window.location.href = "{% url 'password_change' %}";
+  }
+</script>
+<div class="jumbotron">
+  Hi {{ user.username }}!
+  <p><a href="{% url 'password_change' %}">Change Password</a></p>
+  <p><a href="{% url 'logout' %}">logout</a></p>
+</div>
+<div id="test"></div>
+<script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-firestore.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+<script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-analytics.js"></script>
+<script>
+  var users = "{{ user.u.region }}";
+</script>
+<script src="{% static 'js/firebase.js' %}"></script>
+{% else %}
+<script>
+  window.location.href = "{% url 'login' %}";
+</script>
+{% endif %} {% endblock %}
