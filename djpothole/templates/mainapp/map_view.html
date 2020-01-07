@@ -18,20 +18,14 @@
     var user="{{user.u.region}}"
     var fd=[];
     var potholeMarker=L.icon({
-    iconUrl: `{% static 'img/icon.png' %}`,
+    iconUrl: "{% static 'img/icon.png' %}",
     iconSize: [60],
     iconAnchor: [20, 20] 
     })
 
-    var mymap = L.map('mapid').setView([21.243683, 81.635614], 13);
-    L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
-        attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-        maxZoom: 18,
-        id: 'mapbox.dark',
-        accessToken: 'pk.eyJ1Ijoic3JpamFuczM4IiwiYSI6ImNqemN3cHRodzAyb2ozZG94YXZwN3VkMWYifQ.pszoH4JN8jktAkXtDl40wQ'
-    }).addTo(mymap);
+    
     //firebase
-    var firebaseConfig = {
+  var firebaseConfig = {
   apiKey: "AIzaSyAdyRhmquuWcLqF5F9xFhiwfvRsjvWnEtc",
   authDomain: "sih-test-8c936.firebaseapp.com",
   databaseURL: "https://sih-test-8c936.firebaseio.com",
@@ -57,19 +51,31 @@ fdb.where("status","in",['Reported','Working'])
         .region.toLowerCase()
         .includes(user.toLowerCase());
     });
-    fd=filteredDocuments;
-})
+    filteredDocuments.sort((a, b) => {
+      return b.data().occurrence - a.data().occurrence;
+    });
 
-    const lat=fd.map((doc)=>{
-        doc.data().location.latitude
-    })
-    const long=fd.map((doc)=>{
-        doc.data().location.longitude
-    })
-   
-    for(i=0;i<lat.length;i++)
-    var marker = L.marker([lat[i],long[i]], {icon : potholeMarker}).addTo(mymap);
+    var mymap = L.map('mapid').setView([filteredDocuments[0].data().location.latitude, filteredDocuments[0].data().location.longitude], 13);
+    L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+        attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+        maxZoom: 18,
+        id: 'mapbox.dark',
+        accessToken: 'pk.eyJ1Ijoic3JpamFuczM4IiwiYSI6ImNqemN3cHRodzAyb2ozZG94YXZwN3VkMWYifQ.pszoH4JN8jktAkXtDl40wQ'
+    }).addTo(mymap);
 
+
+    const lat=filteredDocuments.map((doc)=>{
+        return doc.data().location.latitude
+    })
+    const long=filteredDocuments.map((doc)=>{
+        return doc.data().location.longitude
+    })   
+    for(i=0;i<lat.length;i++){
+       var marker = L.marker([lat[i],long[i]], {icon : potholeMarker}).addTo(mymap);
+    }
+});
+
+    
 </script>
 {% else %}
 <script>
