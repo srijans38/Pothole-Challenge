@@ -9,5 +9,6 @@ urlpatterns = [
     path('home/<str:id>', views.detail_page, name='detail'),
     path('home/error/pagenotfound/', views.page_not_found,
          name="pageNotFound"),
-    path('map/',views.mapview,name='mapview'),     
+    path('map/',views.mapview,name='mapview'),
+    path('feedback/',views.feedbackview,name='feedbackview'),     
 ]

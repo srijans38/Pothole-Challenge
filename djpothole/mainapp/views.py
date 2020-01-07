@@ -42,3 +42,9 @@ def mapview(req):
         'mainapp/map_view.html',
         context=context
     )
+
+def feedbackview(req):
+    return render(
+        req,
+        'mainapp/feedback_view.html',
+    )
