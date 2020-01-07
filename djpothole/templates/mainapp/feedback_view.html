@@ -1,8 +1,6 @@
-{% extends 'base.html' %} {% load static %} {% block title %}FEEDBACK{% endblock %}
-{% block content %} 
-{% if user.is_authenticated %}
+{% extends 'base.html' %} {% load static %} {% block title %}FEEDBACK{% endblock %} {% block content %} {% if user.is_authenticated %}
 <script>
-        var user="{{user.u.region}}"
+  var user = "{{user.u.region}}";
 
   var firebaseConfig = {
   apiKey: "AIzaSyAdyRhmquuWcLqF5F9xFhiwfvRsjvWnEtc",
@@ -19,6 +17,7 @@ var db = firebase.firestore();
 var fdb=db.collection("reports");
 fdb.where("status","in",['Completed'])
   .onSnapshot(querySnapshot => {
+
     const documents = [];
     querySnapshot.forEach(doc => {
       const d = doc;
@@ -31,21 +30,24 @@ fdb.where("status","in",['Completed'])
         .region.toLowerCase()
         .includes(user.toLowerCase());
     });
-    var fback=document.getElementById("feedback");
-    var fbackchild=document.createElement("p");
-    fDocuments=filteredDocuments.map(doc=>{
-        return doc.data()
-    })
-    fbackchild.innerHTML=fDocuments.forEach(doc=>{
-        doc.uid.toString()+doc.feedback
-    })
+
+    var fback = document.getElementById("feedback");
+    var fbackchild = document.createElement("p");
+    fDocuments = filteredDocuments.map(doc => {
+      return doc.data();
+    });
+
+    console.log(fDocuments);
+    fDocuments.forEach(doc => {
+      fbackchild.innerHTML += `${doc.uid}  ${doc.feedback}<br>`;
+    });
+
     fback.appendChild(fbackchild);
-})
+  });
 </script>
 <div id="feedback"></div>
 {% else %}
 <script>
   window.location.href = "{% url 'login' %}";
 </script>
-{% endif %} 
-{% endblock %}
+{% endif %} {% endblock %}
