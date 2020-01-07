@@ -1,0 +1,79 @@
+{% extends 'base.html' %} {% load static %} {% block title %}MAP{% endblock %}
+{% block content %} 
+{% if user.is_authenticated %}
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
+   integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+   crossorigin=""/>
+<script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
+   integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
+   crossorigin=""></script>   
+<div>
+    POTHOLE LOCATER
+</div>   
+<div id="mapid"></div>
+</div>>
+<style>#mapid { height: 600px; }
+</style>
+<script>
+    var user="{{user.u.region}}"
+    var fd=[];
+    var potholeMarker=L.icon({
+    iconUrl: `{% static 'img/icon.png' %}`,
+    iconSize: [60],
+    iconAnchor: [20, 20] 
+    })
+
+    var mymap = L.map('mapid').setView([21.243683, 81.635614], 13);
+    L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+        attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+        maxZoom: 18,
+        id: 'mapbox.dark',
+        accessToken: 'pk.eyJ1Ijoic3JpamFuczM4IiwiYSI6ImNqemN3cHRodzAyb2ozZG94YXZwN3VkMWYifQ.pszoH4JN8jktAkXtDl40wQ'
+    }).addTo(mymap);
+    //firebase
+    var firebaseConfig = {
+  apiKey: "AIzaSyAdyRhmquuWcLqF5F9xFhiwfvRsjvWnEtc",
+  authDomain: "sih-test-8c936.firebaseapp.com",
+  databaseURL: "https://sih-test-8c936.firebaseio.com",
+  projectId: "sih-test-8c936",
+  storageBucket: "sih-test-8c936.appspot.com",
+  messagingSenderId: "209924411187",
+  appId: "1:209924411187:web:2d1279bbd788bd2351f846"
+};
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+var db = firebase.firestore();
+var fdb=db.collection("reports");
+fdb.where("status","in",['Reported','Working'])
+  .onSnapshot(querySnapshot => {
+    const documents = [];
+    querySnapshot.forEach(doc => {
+      const d = doc;
+      documents.push(d);
+    });
+    var filteredDocuments = documents.filter(docu => {
+      return docu
+        .data()
+        .region.toLowerCase()
+        .includes(user.toLowerCase());
+    });
+    fd=filteredDocuments;
+})
+
+    const lat=fd.map((doc)=>{
+        doc.data().location.latitude
+    })
+    const long=fd.map((doc)=>{
+        doc.data().location.longitude
+    })
+   
+    for(i=0;i<lat.length;i++)
+    var marker = L.marker([lat[i],long[i]], {icon : potholeMarker}).addTo(mymap);
+
+</script>
+{% else %}
+<script>
+  window.location.href = "{% url 'login' %}";
+</script>
+{% endif %} 
+{% endblock %}

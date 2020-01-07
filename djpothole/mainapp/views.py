@@ -34,3 +34,11 @@ def update_ever_logged_in(req):
         req,
         'registration/password_change_done.html',
     )
+
+def mapview(req):
+    context={'user':req.user}
+    return render(
+        req,
+        'mainapp/map_view.html',
+        context=context
+    )
