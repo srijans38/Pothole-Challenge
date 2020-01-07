@@ -39,7 +39,7 @@ db.collection("reports")
     var timestampchild = document.createElement("p");
     var uidchild = document.createElement("p");
     var pathReference = storage.ref(currentReport[0].data().image);
-    storageRef.child(currentReport[0].data().image).getDownloadURL().then(function(url) {
+    pathReference.getDownloadURL().then(function(url) {
     var img = document.getElementById('image');
     img.src = url;})
     landmarkchild.innerHTML = currentReport[0].data().landmark;
