@@ -4,19 +4,21 @@
   var user = "{{user.u.region}}";
 
   var firebaseConfig = {
-    apiKey: "AIzaSyAdyRhmquuWcLqF5F9xFhiwfvRsjvWnEtc",
-    authDomain: "sih-test-8c936.firebaseapp.com",
-    databaseURL: "https://sih-test-8c936.firebaseio.com",
-    projectId: "sih-test-8c936",
-    storageBucket: "sih-test-8c936.appspot.com",
-    messagingSenderId: "209924411187",
-    appId: "1:209924411187:web:2d1279bbd788bd2351f846"
-  };
-  // Initialize Firebase
-  firebase.initializeApp(firebaseConfig);
-  var db = firebase.firestore();
-  var fdb = db.collection("reports");
-  fdb.where("status", "in", ["Completed"]).onSnapshot(querySnapshot => {
+  apiKey: "AIzaSyAdyRhmquuWcLqF5F9xFhiwfvRsjvWnEtc",
+  authDomain: "sih-test-8c936.firebaseapp.com",
+  databaseURL: "https://sih-test-8c936.firebaseio.com",
+  projectId: "sih-test-8c936",
+  storageBucket: "sih-test-8c936.appspot.com",
+  messagingSenderId: "209924411187",
+  appId: "1:209924411187:web:2d1279bbd788bd2351f846"
+};
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+var db = firebase.firestore();
+var fdb=db.collection("reports");
+fdb.where("status","in",['Completed'])
+  .onSnapshot(querySnapshot => {
+
     const documents = [];
     querySnapshot.forEach(doc => {
       const d = doc;
@@ -29,6 +31,7 @@
         .region.toLowerCase()
         .includes(user.toLowerCase());
     });
+
     var fback = document.getElementById("feedback");
     var fbackchild = document.createElement("p");
     fDocuments = filteredDocuments.map(doc => {
@@ -37,8 +40,9 @@
 
     console.log(fDocuments);
     fDocuments.forEach(doc => {
-      fbackchild.innerHTML += `${doc.uid} + ${doc.feedback}`;
+      fbackchild.innerHTML += `${doc.uid}  ${doc.feedback}<br>`;
     });
+
     fback.appendChild(fbackchild);
   });
 </script>
