@@ -10,6 +10,8 @@ var firebaseConfig ={
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 var db = firebase.firestore();
+var storage = firebase.app().storage("gs://sih-test-8c936.appspot.com");
+var pathReference = storage.ref();
 db.collection("reports")
   .onSnapshot(querySnapshot => {
     const documents = [];
@@ -21,7 +23,7 @@ db.collection("reports")
       return docu.id.includes(id);
     });
     if (currentReport.length) {
-    var image = document.getElementById("image");
+    // var image = document.getElementById("image");
     var landmark = document.getElementById("landmark");
     var location = document.getElementById("location");
     var occurrence = document.getElementById("occurrence");
@@ -29,7 +31,6 @@ db.collection("reports")
     var status = document.getElementById("status");
     var timestamp = document.getElementById("timestamp");
     var uid = document.getElementById("uid");
-    var imagechild = document.createElement("p");
     var landmarkchild = document.createElement("p");
     var locationchild = document.createElement("p");
     var occurrencechild = document.createElement("p");
@@ -37,8 +38,10 @@ db.collection("reports")
     var statuschild = document.createElement("p");
     var timestampchild = document.createElement("p");
     var uidchild = document.createElement("p");
-    imagechild.innerHTML = currentReport[0].data().image;
-    image.appendChild(imagechild);
+    var pathReference = storage.ref(currentReport[0].data().image);
+    storageRef.child(currentReport[0].data().image).getDownloadURL().then(function(url) {
+    var img = document.getElementById('image');
+    img.src = url;})
     landmarkchild.innerHTML = currentReport[0].data().landmark;
     landmark.appendChild(landmarkchild);
     locationchild.innerHTML = currentReport[0].data().location.latitude+"  "+currentReport[0].data().location.longitude;
