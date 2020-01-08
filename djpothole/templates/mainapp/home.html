@@ -16,6 +16,11 @@
    integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
    crossorigin=""></script>
 
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+
+
+
 
 <div class="container-fluid">
                 <div class="d-sm-flex justify-content-between align-items-center mb-4">
@@ -64,7 +69,7 @@
                 </div>
                 <div class="row">
                     <div class="col-lg-7 col-xl-8">
-                      <<a href="/mainapp/map">
+                      <a href="/mainapp/map">
                         <div class="card shadow mb-4">
                             <div class="card-header d-flex justify-content-between align-items-center">
                                 <h6 class="text-primary font-weight-bold m-0">POTHOLE </h6>
@@ -103,7 +108,7 @@
 
                             </div>
                                 <div class="card-body">
-                                <div class="chart-area"><canvas id = "chartcanvas" ></canvas>
+                                <div class="chart-area" ><canvas id="chartcanvas"></canvas>
                                 </div>
                                 <div
                                     class="text-center small mt-4">
@@ -135,6 +140,24 @@
   iconSize: [60],
   iconAnchor: [20, 20]
   })
+
+
+  var ctx = document.getElementById('chartcanvas').getContext('2d');
+var chart = new Chart(ctx, {
+    type: "doughnut",
+  data: {
+    labels: ["resolved", "pending"],
+    datasets: [
+      {
+        label: "",
+        backgroundColor: ["#1cc88a", "#f6c23e"],
+        borderColor: ["#ffffff", "#ffffff"],
+        data: ["0", "0"]
+      }
+    ]
+  },
+  options: { maintainAspectRatio: false, legend: { display: false }, title: {}
+}});
 </script>
 
 <script src="{% static 'js/firebaseinit.js' %}"></script>

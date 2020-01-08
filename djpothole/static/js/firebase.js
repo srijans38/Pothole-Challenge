@@ -1,23 +1,3 @@
-// "{&quot;type&quot;:&quot;doughnut&quot;, &quot;data&quot;:{&quot;labels&quot;:[&quot;resolved&quot;,&quot;pending&quot;],&quot;datasets&quot;:[{&quot;label&quot;:&quot;&quot;,&quot;backgroundColor&quot;:[&quot;#1cc88a&quot;,&quot;#f6c23e&quot;],&quot;borderColor&quot;:[&quot;#ffffff&quot;,&quot;#ffffff&quot;],&quot;data&quot;:[&quot;50&quot;,&quot;30&quot;]}]},&quot;options&quot;:{&quot;maintainAspectRatio&quot;:false,&quot;legend&quot;:{&quot;display&quot;:false},&quot;title&quot;:{}}}";
-
-fdb = db.collection("reports");
-var chartdata = {
-  type: "doughnut",
-  data: {
-    labels: ["resolved", "pending"],
-    datasets: [
-      {
-        label: "",
-        backgroundColor: ["#1cc88a", "#f6c23e"],
-        borderColor: ["#ffffff", "#ffffff"],
-        data: ["50", "30"]
-      }
-    ]
-  },
-  options: { maintainAspectRatio: false, legend: { display: false }, title: {} }
-};
-var chart = document.getElementById("chartcanvas");
-
 fdb.where("status", "in", ["Reported", "Working"]).onSnapshot(querySnapshot => {
   const documents = [];
   querySnapshot.forEach(doc => {
@@ -37,13 +17,9 @@ fdb.where("status", "in", ["Reported", "Working"]).onSnapshot(querySnapshot => {
   });
   t.innerText = "";
   t.innerText = `${filteredDocuments.length}`;
-  chartdata.data.datasets[0].data[0] = filteredDocuments.length.toString();
-  console.log(chartdata.data.datasets[0].data);
-  var str = JSON.stringify(chartdata);
-  console.log(str);
-  str = str.replace(/"/g, "&quot;");
-  chart.setAttribute("data-bs-chart", str);
   a.innerHTML = "";
+  chart.data.datasets[0].data[1] = filteredDocuments.length.toString();
+  chart.update();
   filteredDocuments.forEach(data => {
     var li = document.createElement("a");
     li.className = "list-group-item list-group-item-action";
@@ -68,12 +44,8 @@ fdb.where("status", "in", ["Completed"]).onSnapshot(querySnapshot => {
   });
   b.innerText = "";
   b.innerText = `${filteredCompletedDocuments.length}`;
-  chartdata.data.datasets[0].data[1] = filteredCompletedDocuments.length.toString();
-  chart.setAttribute(
-    "data-bs-chart",
-    JSON.stringify(chartdata).replace(/"/g, "&quot;")
-  );
-  console.log(chart.attributes[1]);
+  chart.data.datasets[0].data[0] = filteredCompletedDocuments.length.toString();
+  chart.update();
 });
 
 fdb = db.collection("reports");
