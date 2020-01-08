@@ -1,5 +1,4 @@
-{% extends 'base.html' %} {% load static %} {% block title %}FEEDBACK{% endblock
-%} {% block content %} {% if user.is_authenticated %}
+{% extends 'base.html' %} {% load static %} {% block title %}FEEDBACK{% endblock %} {% block content %} {% if user.is_authenticated %}
 <script>
   var user = "{{user.u.region}}";
 
