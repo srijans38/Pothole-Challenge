@@ -12,6 +12,7 @@ firebase.initializeApp(firebaseConfig);
 var db = firebase.firestore();
 var storage = firebase.app().storage("gs://sih-test-8c936.appspot.com");
 var pathReference = storage.ref();
+var uida;
 db.collection("reports")
   .onSnapshot(querySnapshot => {
     const documents = [];
@@ -56,6 +57,7 @@ db.collection("reports")
     timestamp.appendChild(timestampchild);
     uidchild.innerHTML = currentReport[0].data().uid;
     uid.appendChild(uidchild);
+    uida = currentReport[0].data().uid;
     } else {
       window.location.href = "error/pagenotfound";
     }
