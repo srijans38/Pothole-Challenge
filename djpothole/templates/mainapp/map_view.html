@@ -1,15 +1,16 @@
 {% extends 'base.html' %} {% load static %} {% block title %}MAP{% endblock %}
-{% block content %} 
+{% block content %}
 {% if user.is_authenticated %}
+
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
    integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
    crossorigin=""/>
 <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
    integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
-   crossorigin=""></script>   
+   crossorigin=""></script>
 <div>
     POTHOLE LOCATER
-</div>   
+</div>
 <div id="mapid"></div>
 </div>>
 <style>#mapid { height: 600px; }
@@ -20,10 +21,10 @@
     var potholeMarker=L.icon({
     iconUrl: "{% static 'img/icon.png' %}",
     iconSize: [60],
-    iconAnchor: [20, 20] 
+    iconAnchor: [20, 20]
     })
 
-    
+
     //firebase
   var firebaseConfig = {
   apiKey: "AIzaSyAdyRhmquuWcLqF5F9xFhiwfvRsjvWnEtc",
@@ -69,17 +70,17 @@ fdb.where("status","in",['Reported','Working'])
     })
     const long=filteredDocuments.map((doc)=>{
         return doc.data().location.longitude
-    })   
+    })
     for(i=0;i<lat.length;i++){
        var marker = L.marker([lat[i],long[i]], {icon : potholeMarker}).addTo(mymap);
     }
 });
 
-    
+
 </script>
 {% else %}
 <script>
   window.location.href = "{% url 'login' %}";
 </script>
-{% endif %} 
+{% endif %}
 {% endblock %}

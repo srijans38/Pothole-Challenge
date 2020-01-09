@@ -1,18 +1,5 @@
-var firebaseConfig ={
-  apiKey: "AIzaSyAdyRhmquuWcLqF5F9xFhiwfvRsjvWnEtc",
-  authDomain: "sih-test-8c936.firebaseapp.com",
-  databaseURL: "https://sih-test-8c936.firebaseio.com",
-  projectId: "sih-test-8c936",
-  storageBucket: "sih-test-8c936.appspot.com",
-  messagingSenderId: "209924411187",
-  appId: "1:209924411187:web:2d1279bbd788bd2351f846"
-};
-// Initialize Firebase
-firebase.initializeApp(firebaseConfig);
-var db = firebase.firestore();
-var storage = firebase.app().storage("gs://sih-test-8c936.appspot.com");
-var pathReference = storage.ref();
-var uida;
+import './firebaseinit';
+var storage = firebase.storage();
 db.collection("reports")
   .onSnapshot(querySnapshot => {
     const documents = [];
@@ -32,6 +19,7 @@ db.collection("reports")
     var status = document.getElementById("status");
     var timestamp = document.getElementById("timestamp");
     var uid = document.getElementById("uid");
+    var imagechild = document.createElement("p");
     var landmarkchild = document.createElement("p");
     var locationchild = document.createElement("p");
     var occurrencechild = document.createElement("p");
@@ -41,8 +29,9 @@ db.collection("reports")
     var uidchild = document.createElement("p");
     var pathReference = storage.ref(currentReport[0].data().image);
     pathReference.getDownloadURL().then(function(url) {
-    var img = document.getElementById('image');
-    img.src = url;})
+      var img = document.getElementById('image');
+      img.src = url;
+      })
     landmarkchild.innerHTML = currentReport[0].data().landmark;
     landmark.appendChild(landmarkchild);
     locationchild.innerHTML = currentReport[0].data().location.latitude+"  "+currentReport[0].data().location.longitude;
