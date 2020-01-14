@@ -28,7 +28,7 @@
         class="navbar navbar-dark align-items-start sidebar sidebar-dark accordion bg-gradient-primary p-1"
         style="background-color:rgb(123,230,230);background-image: linear-gradient(180deg,rgb(123,230,230) 10%,#224abe);"
       >
-        <div class="container-fluid d-flex flex-column p-0">
+        <div class="container-fluid d-flex flex-column p-0" style="position: absolute;">
           <a
             class="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0"
             href="HOME.html"
@@ -38,17 +38,17 @@
           <hr class="sidebar-divider my-0" />
           <ul class="nav navbar-nav text-light" id="accordionSidebar">
             <li class="nav-item" role="presentation">
-              <a class="nav-link active" href="./mainapp/home.html"
+              <a class="nav-link active" href="{% url 'mainapp:home' %}"
                 ><span>HOME</span></a
               >
             </li>
             <li class="nav-item" role="presentation">
-              <a class="nav-link active" href="./mainapp/feedback"
+              <a class="nav-link active" href="{% url 'mainapp:feedbackview' %}"
                 ><span>FEEDBACK</span></a
               >
             </li>
             <li class="nav-item" role="presentation">
-              <a class="nav-link active" href="../mainapp/map"
+              <a class="nav-link active" href="{% url 'mainapp:mapview' %}"
                 ><span>MAP</span></a
               >
             </li>
@@ -150,22 +150,8 @@
                         class="d-flex align-items-center dropdown-item"
                         href="#"
                       >
-                        <div class="mr-3">
-                          <div class="bg-warning icon-circle">
-                            <i
-                              class="fas fa-exclamation-triangle text-white"
-                            ></i>
-                          </div>
-                        </div>
-                        <div>
-                          <span class="small text-gray-500"
-                            >December 2, 2019</span
-                          >
-                          <p>
-                            Spending Alert: We've noticed unusually high
-                            spending for your account.
-                          </p>
-                        </div> </a
+
+                         </a
                       ><a
                         class="text-center dropdown-item small text-gray-500"
                         href="#"
