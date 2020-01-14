@@ -45,7 +45,7 @@ fdb.where("status","in",['Completed'])
     fback.appendChild(fbackchild);
   });
 </script>
-<div id="feedback"></div>
+<div id="feedback" class="card-body col-lg-6 col-md-8 col-mb-10 align-self-center jumbotron " style="margin-top:15px"></div>
 {% else %}
 <script>
   window.location.href = "{% url 'login' %}";
