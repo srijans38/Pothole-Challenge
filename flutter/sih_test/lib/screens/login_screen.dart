@@ -1,9 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:sih_test/anim.dart';
-import 'package:sih_test/auth.dart';
-import 'package:sih_test/main_screen.dart';
 import 'package:sih_test/screens/login_email.dart';
+import 'package:sih_test/services/auth.dart';
+import 'package:sih_test/services/firebase_auth_service.dart';
 
 import '../icon_button.dart';
 
@@ -103,13 +104,9 @@ class _LoginScreenState extends State<LoginScreen> {
                           width: double.infinity,
                           child: CustomIconButton(
                             onPressed: () {
-                              signInWithGoogle().then((FirebaseUser user) {
-                                loggedinUser = user;
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => MainScreen()));
-                              });
+                              Provider.of<FirebaseAuthService>(context,
+                                      listen: false)
+                                  .signInWithGoogle();
                             },
                             color: Color(0xff4285f4),
                             image: 'assets/google-logo.png',

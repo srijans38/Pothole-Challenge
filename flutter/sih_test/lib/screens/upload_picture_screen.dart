@@ -4,8 +4,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:path/path.dart';
-import 'package:sih_test/auth.dart';
 import 'package:sih_test/screens/upload_report_screen.dart';
+import 'package:sih_test/services/auth.dart';
 
 class DisplayPictureScreen extends StatefulWidget {
   final String imagePath;

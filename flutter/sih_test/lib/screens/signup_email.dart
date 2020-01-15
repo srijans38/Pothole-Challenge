@@ -1,9 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:sih_test/screens/text_field.dart';
+import 'package:sih_test/services/auth_widget.dart';
+import 'package:sih_test/services/firebase_auth_service.dart';
 
 import '../icon_button.dart';
-import '../main_screen.dart';
 
 FirebaseAuth _auth = FirebaseAuth.instance;
 
@@ -109,14 +111,15 @@ class _SignupEmailState extends State<SignupEmail> {
                     child: CustomIconButton(
                       icon: Icons.alternate_email,
                       onPressed: () {
-                        _auth
+                        Provider.of<FirebaseAuthService>(context, listen: false)
                             .createUserWithEmailAndPassword(
                                 email: email, password: password)
-                            .then((AuthResult result) {
-                          Navigator.push(
+                            .then((result) {
+                          Navigator.pushAndRemoveUntil(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => MainScreen()));
+                                  builder: (context) => AuthWidget()),
+                              (Route route) => false);
                         }).catchError((error, stackTrace) {
                           print(error);
                           if (error.code == 'ERROR_EMAIL_ALREADY_IN_USE') {

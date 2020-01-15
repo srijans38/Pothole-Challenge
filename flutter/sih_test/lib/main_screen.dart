@@ -2,9 +2,10 @@ import 'package:camera/camera.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:sih_test/auth.dart';
-import 'package:sih_test/screens/login_screen.dart';
+import 'package:provider/provider.dart';
 import 'package:sih_test/screens/take_picture_screen.dart';
+import 'package:sih_test/services/auth.dart';
+import 'package:sih_test/services/firebase_auth_service.dart';
 
 FirebaseAuth _auth = FirebaseAuth.instance;
 GoogleSignIn _googleSignIn = GoogleSignIn();
@@ -46,13 +47,8 @@ class _MainScreenState extends State<MainScreen> {
             Center(child: Text(email)),
             RaisedButton(
               onPressed: () async {
-                signOutWithGoogle();
-                _auth.signOut().then((value) {
-                  Navigator.pushAndRemoveUntil(
-                      context,
-                      MaterialPageRoute(builder: (context) => LoginScreen()),
-                      (Route route) => false);
-                });
+                await Provider.of<FirebaseAuthService>(context, listen: false)
+                    .signOut();
               },
               child: Text('Sign out'),
             ),
