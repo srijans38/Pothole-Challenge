@@ -4,8 +4,10 @@ import 'package:google_sign_in/google_sign_in.dart';
 
 @immutable
 class User {
-  const User({@required this.uid});
+  const User({@required this.uid, this.email, this.phoneNo});
   final String uid;
+  final String email;
+  final String phoneNo;
 }
 
 class FirebaseAuthService {
@@ -13,7 +15,13 @@ class FirebaseAuthService {
   final GoogleSignIn _googleSignIn = GoogleSignIn();
 
   User _userFromFirebase(FirebaseUser user) {
-    return user == null ? null : User(uid: user.uid);
+    return user == null
+        ? null
+        : User(uid: user.uid, email: user.email, phoneNo: user.phoneNumber);
+  }
+
+  Future<FirebaseUser> getCurrentUser() async {
+    return await _firebaseAuth.currentUser();
   }
 
   Stream<User> get onAuthStateChanged {

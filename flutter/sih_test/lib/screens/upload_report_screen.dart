@@ -28,6 +28,11 @@ class _UploadReportScreenState extends State<UploadReportScreen> {
     StorageFileDownloadTask fileDownloadTask =
         storageReference.writeToFile(File(filepath));
     await fileDownloadTask.future;
+    FirebaseStorage.instance
+        .ref()
+        .child(widget.imageRef)
+        .getDownloadURL()
+        .then((value) => print(value));
     return File(filepath);
   }
 

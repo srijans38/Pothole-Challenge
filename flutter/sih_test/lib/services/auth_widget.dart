@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sih_test/main_screen.dart';
 import 'package:sih_test/screens/login_screen.dart';
+import 'package:sih_test/screens/main_screen.dart';
 import 'package:sih_test/services/firebase_auth_service.dart';
 
 class AuthWidget extends StatelessWidget {
@@ -15,7 +15,13 @@ class AuthWidget extends StatelessWidget {
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.active) {
           final user = snapshot.data;
-          return user != null ? MainScreen() : LoginScreen();
+          if (user != null) {
+            return Provider<User>.value(
+              value: user,
+              child: MainScreen(),
+            );
+          }
+          return LoginScreen();
         }
         return Scaffold(
           body: Center(

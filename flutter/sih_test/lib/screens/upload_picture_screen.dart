@@ -1,11 +1,11 @@
 import 'dart:io';
 
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:path/path.dart';
+import 'package:provider/provider.dart';
 import 'package:sih_test/screens/upload_report_screen.dart';
-import 'package:sih_test/services/auth.dart';
+import 'package:sih_test/services/firebase_auth_service.dart';
 
 class DisplayPictureScreen extends StatefulWidget {
   final String imagePath;
@@ -17,13 +17,12 @@ class DisplayPictureScreen extends StatefulWidget {
 }
 
 class _DisplayPictureScreenState extends State<DisplayPictureScreen> {
-  FirebaseUser logginUser;
   String uploadedImageRef;
 
-  Future uploadFile() async {
+  Future uploadFile(String uid) async {
     StorageReference storageReference = FirebaseStorage.instance
         .ref()
-        .child('reports/${logginUser.uid}/${basename(widget.imagePath)}');
+        .child('reports/$uid/${basename(widget.imagePath)}');
     StorageUploadTask uploadTask =
         storageReference.putFile(File(widget.imagePath));
     uploadTask.events.listen((data) {
@@ -31,14 +30,6 @@ class _DisplayPictureScreenState extends State<DisplayPictureScreen> {
     });
     storageReference.getPath().then((value) {
       uploadedImageRef = value;
-    });
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    getCurrentUser().then((user) {
-      logginUser = user;
     });
   }
 
@@ -56,9 +47,12 @@ class _DisplayPictureScreenState extends State<DisplayPictureScreen> {
               child: Image.file(File(widget.imagePath)),
             ),
             RaisedButton(
-              onPressed: () {
+              onPressed: () async {
                 print(basename(widget.imagePath));
-                uploadFile().then((value) {
+                final user = await Provider.of<FirebaseAuthService>(context,
+                        listen: false)
+                    .getCurrentUser();
+                uploadFile(user.uid).then((value) {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
