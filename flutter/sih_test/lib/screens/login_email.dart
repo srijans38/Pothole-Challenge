@@ -2,11 +2,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sih_test/screens/signup_email.dart';
-import 'package:sih_test/screens/text_field.dart';
 import 'package:sih_test/services/auth_widget.dart';
 import 'package:sih_test/services/firebase_auth_service.dart';
+import 'package:sih_test/utils/text_field.dart';
 
-import '../icon_button.dart';
+import '../utils/icon_button.dart';
 
 FirebaseAuth _auth = FirebaseAuth.instance;
 

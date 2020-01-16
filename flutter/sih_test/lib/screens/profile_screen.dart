@@ -1,6 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sih_test/services/firebase_auth_service.dart';
+import 'package:sih_test/services/firestore_service.dart';
+import 'package:sih_test/utils/report_box.dart';
 
 class ProfileScreen extends StatelessWidget {
   @override
@@ -18,8 +21,24 @@ class ProfileScreen extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              SizedBox(
-                width: 25,
+              IconButton(
+                onPressed: () async {
+                  final report = Report(
+                      uid: [Provider.of<User>(context, listen: false).uid],
+                      imageRef: 'reports/hello',
+                      landmark: 'hello',
+                      location: GeoPoint(20.222, 30.222),
+                      timestamp: Timestamp.now());
+                  Provider.of<FirestoreService>(context, listen: false)
+                      .uploadReport(report)
+                      .then((value) {
+                    print(value.path);
+                  });
+                },
+                icon: Icon(
+                  Icons.add_circle,
+                  size: 25.0,
+                ),
               ),
               Text(
                 'PROFILE',
@@ -36,7 +55,7 @@ class ProfileScreen extends StatelessWidget {
                       .signOut();
                 },
                 icon: Icon(
-                  Icons.settings,
+                  Icons.exit_to_app,
                   size: 25.0,
                 ),
               ),
@@ -93,6 +112,32 @@ class ProfileScreen extends StatelessWidget {
                   color: Colors.grey,
                 ),
               ),
+              SizedBox(
+                height: MediaQuery.of(context).size.height / 30,
+              ),
+              StreamBuilder<QuerySnapshot>(
+                stream: Provider.of<FirestoreService>(context)
+                    .getReportsByUser(Provider.of<User>(context).uid),
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    var docs = snapshot.data.documents;
+                    return ListView.builder(
+                      physics: NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      itemCount: snapshot.data.documents.length,
+                      itemBuilder: (context, index) {
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 8.0, horizontal: 20.0),
+                          child: ReportBox(title: docs[index].data['landmark']),
+                        );
+                      },
+                    );
+                  }
+                  return SizedBox(
+                      height: 20.0, child: CircularProgressIndicator());
+                },
+              )
             ],
           ),
         ),
