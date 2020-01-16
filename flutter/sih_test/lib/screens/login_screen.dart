@@ -100,17 +100,22 @@ class _LoginScreenState extends State<LoginScreen> {
                         SizedBox(
                           height: 80.0,
                         ),
-                        SizedBox(
-                          width: double.infinity,
-                          child: CustomIconButton(
-                            onPressed: () {
-                              Provider.of<FirebaseAuthService>(context,
-                                      listen: false)
-                                  .signInWithGoogle();
-                            },
-                            color: Color(0xff4285f4),
-                            image: 'assets/google-logo.png',
-                            text: 'Continue with Google',
+                        Theme(
+                          data: ThemeData.light().copyWith(
+                            canvasColor: Colors.white,
+                          ),
+                          child: SizedBox(
+                            width: double.infinity,
+                            child: CustomIconButton(
+                              onPressed: () {
+                                Provider.of<FirebaseAuthService>(context,
+                                        listen: false)
+                                    .signInWithGoogle();
+                              },
+                              color: Color(0xff4285f4),
+                              image: 'assets/google-logo.png',
+                              text: 'Continue with Google',
+                            ),
                           ),
                         ),
                         SizedBox(

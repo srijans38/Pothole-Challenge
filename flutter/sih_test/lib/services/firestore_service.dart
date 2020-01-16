@@ -51,6 +51,7 @@ class FirestoreService {
     return _firestore
         .collection('reports')
         .where('uid', arrayContains: uid)
+        .orderBy('timestamp', descending: true)
         .snapshots();
   }
 

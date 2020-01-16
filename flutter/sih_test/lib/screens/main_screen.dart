@@ -1,7 +1,7 @@
-import 'package:camera/camera.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:sih_test/screens/home_screen.dart';
 import 'package:sih_test/screens/profile_screen.dart';
 
 FirebaseAuth _auth = FirebaseAuth.instance;
@@ -13,26 +13,25 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-  CameraDescription camera;
-
   int _currentIndex = 0;
   final List<Widget> _children = [
-    Center(child: Text('Home')),
+    HomeScreen(),
+    Center(
+      child: SafeArea(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            RawMaterialButton(
+              constraints: BoxConstraints(minHeight: 200.0),
+              onPressed: () {},
+              child: Text('Report a new pothole'),
+            )
+          ],
+        ),
+      ),
+    ),
     ProfileScreen(),
   ];
-
-  @override
-  void initState() {
-    super.initState();
-
-    getCameras().then((cameras) {
-      camera = cameras.first;
-    });
-  }
-
-  Future<List<CameraDescription>> getCameras() async {
-    return await availableCameras();
-  }
 
   void onBottomTapped(int index) {
     setState(() {
@@ -47,15 +46,20 @@ class _MainScreenState extends State<MainScreen> {
       bottomNavigationBar: BottomNavigationBar(
         onTap: onBottomTapped,
         currentIndex: _currentIndex,
+        backgroundColor: ThemeData.light().canvasColor,
         items: [
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
             title: Text('Home'),
           ),
           BottomNavigationBarItem(
+            icon: Icon(Icons.camera_alt),
+            title: Text('Report'),
+          ),
+          BottomNavigationBarItem(
             icon: Icon(Icons.person),
             title: Text('Profile'),
-          )
+          ),
         ],
       ),
     );

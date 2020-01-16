@@ -15,7 +15,15 @@ class ProfileScreen extends StatelessWidget {
         Container(
           height: MediaQuery.of(context).size.width / 4.5,
           decoration: BoxDecoration(
-              //color: Colors.blue,
+//            boxShadow: [
+//              BoxShadow(
+//                color: Colors.grey.withOpacity(0.5),
+//                offset: Offset.fromDirection(45.0),
+//                blurRadius: 20.0,
+//                spreadRadius: 0.0,
+//              ),
+//            ],
+//            color: Colors.white,
               ),
           padding: EdgeInsets.only(top: 30.0, right: 30.0, left: 30.0),
           child: Row(
