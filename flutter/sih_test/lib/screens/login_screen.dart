@@ -1,11 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:sih_test/anim.dart';
-import 'package:sih_test/auth.dart';
-import 'package:sih_test/main_screen.dart';
+import 'package:provider/provider.dart';
 import 'package:sih_test/screens/login_email.dart';
+import 'package:sih_test/services/auth.dart';
+import 'package:sih_test/services/firebase_auth_service.dart';
+import 'package:sih_test/utils/anim.dart';
 
-import '../icon_button.dart';
+import '../utils/icon_button.dart';
 
 FirebaseAuth _auth = FirebaseAuth.instance;
 
@@ -99,21 +100,22 @@ class _LoginScreenState extends State<LoginScreen> {
                         SizedBox(
                           height: 80.0,
                         ),
-                        SizedBox(
-                          width: double.infinity,
-                          child: CustomIconButton(
-                            onPressed: () {
-                              signInWithGoogle().then((FirebaseUser user) {
-                                loggedinUser = user;
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => MainScreen()));
-                              });
-                            },
-                            color: Color(0xff4285f4),
-                            image: 'assets/google-logo.png',
-                            text: 'Continue with Google',
+                        Theme(
+                          data: ThemeData.light().copyWith(
+                            canvasColor: Colors.white,
+                          ),
+                          child: SizedBox(
+                            width: double.infinity,
+                            child: CustomIconButton(
+                              onPressed: () {
+                                Provider.of<FirebaseAuthService>(context,
+                                        listen: false)
+                                    .signInWithGoogle();
+                              },
+                              color: Color(0xff4285f4),
+                              image: 'assets/google-logo.png',
+                              text: 'Continue with Google',
+                            ),
                           ),
                         ),
                         SizedBox(

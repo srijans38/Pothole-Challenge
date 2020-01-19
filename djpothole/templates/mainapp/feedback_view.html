@@ -1,23 +1,28 @@
-{% extends 'base.html' %} {% load static %} {% block title %}FEEDBACK{% endblock%} {% block content %} {% if user.is_authenticated %}
+{% extends 'base.html' %} {% load static %} {% block title %}FEEDBACK{% endblock %} {% block content %} {% if user.is_authenticated %}
+
+<script>
+  var b = "{{user.u.ever_logged_in}}";
+  if (b == "False") {
+    window.location.href = "{% url 'password_change' %}";
+  }
+</script>
 <script>
   var user = "{{user.u.region}}";
 
   var firebaseConfig = {
-  apiKey: "AIzaSyAdyRhmquuWcLqF5F9xFhiwfvRsjvWnEtc",
-  authDomain: "sih-test-8c936.firebaseapp.com",
-  databaseURL: "https://sih-test-8c936.firebaseio.com",
-  projectId: "sih-test-8c936",
-  storageBucket: "sih-test-8c936.appspot.com",
-  messagingSenderId: "209924411187",
-  appId: "1:209924411187:web:2d1279bbd788bd2351f846"
-};
-// Initialize Firebase
-firebase.initializeApp(firebaseConfig);
-var db = firebase.firestore();
-var fdb=db.collection("reports");
-fdb.where("status","in",['Completed'])
-  .onSnapshot(querySnapshot => {
-
+    apiKey: "AIzaSyAdyRhmquuWcLqF5F9xFhiwfvRsjvWnEtc",
+    authDomain: "sih-test-8c936.firebaseapp.com",
+    databaseURL: "https://sih-test-8c936.firebaseio.com",
+    projectId: "sih-test-8c936",
+    storageBucket: "sih-test-8c936.appspot.com",
+    messagingSenderId: "209924411187",
+    appId: "1:209924411187:web:2d1279bbd788bd2351f846"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  var db = firebase.firestore();
+  var fdb = db.collection("reports");
+  fdb.where("status", "in", ["Completed"]).onSnapshot(querySnapshot => {
     const documents = [];
     querySnapshot.forEach(doc => {
       const d = doc;
@@ -45,7 +50,11 @@ fdb.where("status","in",['Completed'])
     fback.appendChild(fbackchild);
   });
 </script>
-<div id="feedback" class="card-body col-lg-6 col-md-8 col-mb-10 align-self-center jumbotron " style="margin-top:15px"></div>
+<div
+  id="feedback"
+  class="card-body col-lg-6 col-md-8 col-mb-10 align-self-center jumbotron "
+  style="margin-top:15px"
+></div>
 {% else %}
 <script>
   window.location.href = "{% url 'login' %}";

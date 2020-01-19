@@ -2,7 +2,7 @@ import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:sih_test/screens/upload_picture_screen.dart';
+import 'package:sih_test/utils/picture_bottom_modal.dart';
 
 class TakePictureScreen extends StatefulWidget {
   final CameraDescription camera;
@@ -13,6 +13,7 @@ class TakePictureScreen extends StatefulWidget {
 }
 
 class _TakePictureScreenState extends State<TakePictureScreen> {
+  CameraDescription camera;
   CameraController _controller;
   Future<void> _initializeControllerFuture;
 
@@ -29,6 +30,8 @@ class _TakePictureScreenState extends State<TakePictureScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: true,
+      resizeToAvoidBottomPadding: true,
       body: FutureBuilder<void>(
         future: _initializeControllerFuture,
         builder: (context, snapshot) {
@@ -53,12 +56,29 @@ class _TakePictureScreenState extends State<TakePictureScreen> {
                               (await getTemporaryDirectory()).path,
                               '${DateTime.now()}.png');
                           await _controller.takePicture(path);
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    DisplayPictureScreen(imagePath: path)),
-                          );
+                          showModalBottomSheet(
+                              isDismissible: false,
+                              isScrollControlled: false,
+                              context: context,
+                              builder: (context) {
+                                return Container(
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.only(
+                                        topRight: Radius.circular(25.0),
+                                        topLeft: Radius.circular(25.0),
+                                      ),
+                                    ),
+                                    child: PictureBottomModal(
+                                      imagePath: path,
+                                    ));
+                              });
+//                          Navigator.push(
+//                            context,
+//                            MaterialPageRoute(
+//                                builder: (context) =>
+//                                    DisplayPictureScreen(imagePath: path)),
+//                          );
                         } catch (e) {
                           print(e);
                         }

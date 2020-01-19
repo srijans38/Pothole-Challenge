@@ -1,6 +1,61 @@
- {% load crispy_forms_tags %} {% block title %}Login{% endblock %} 
-<h2>Login</h2>
-<form method="post">
-  {% csrf_token %} {{ form | crispy }}
-  <button type="submit" class="btn btn-success">Login</button>
-</form>
+ {% load crispy_forms_tags %} {% load static %}
+ <!DOCTYPE html>
+ <html lang="en" dir="ltr">
+
+ <head>
+   <meta charset="utf-8">
+   <title>Login</title>
+   <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}" />
+   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" />
+   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" />
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css" />
+   <link rel="stylesheet" href="{% static 'bootstrap/css/hover.css' %}" />
+ </head>
+
+ <body>
+
+
+
+   <div class="row">
+     <div class="jumbotron col-md-6 col-xl-4 col-lg-4 align-self-center card-body" style=" background-color: #1e2833;
+      padding: 40px;
+      border-radius: 4px;
+      transform: translate(-50%, -50%);
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      color: #fff;">
+       <h2>Login...</h2>
+       <form method="post">
+         {% csrf_token %} {{ form | crispy }}
+         <button type="submit" class="btn  btn-success hvr-shrink ">Login</button>
+       </form>
+     </div>
+   </div>
+
+   <style>
+     body {
+       background: linear-gradient(-45deg, #464159, #6c7b95, #8bbabb, #c7f0db);
+       background-size: 400% 400%;
+       animation: gradient 10s ease infinite;
+     }
+
+     @keyframes gradient {
+       0% {
+         background-position: 0% 50%;
+       }
+
+       50% {
+         background-position: 100% 50%;
+       }
+
+       100% {
+         background-position: 0% 50%;
+       }
+     }
+   </style>
+
+
+ </body>
+
+ </html>
