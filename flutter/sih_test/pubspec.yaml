@@ -31,6 +31,8 @@ dependencies:
   firebase_storage:
   provider:
   geolocator:
+  geocoder: ^0.2.1
+  http:
 
 
   # The following adds the Cupertino Icons font to your application.

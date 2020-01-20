@@ -1,5 +1,9 @@
+import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 import 'package:sih_test/services/firebase_auth_service.dart';
 import 'package:sih_test/services/firestore_service.dart';
@@ -31,17 +35,11 @@ class ProfileScreen extends StatelessWidget {
             children: <Widget>[
               IconButton(
                 onPressed: () async {
-                  final report = Report(
-                      uid: [Provider.of<User>(context, listen: false).uid],
-                      imageRef: 'reports/hello',
-                      landmark: 'hello',
-                      location: GeoPoint(20.222, 30.222),
-                      timestamp: Timestamp.now());
-                  Provider.of<FirestoreService>(context, listen: false)
-                      .uploadReport(report)
-                      .then((value) {
-                    print(value.path);
-                  });
+                  var loc = await Geolocator().getCurrentPosition();
+                  print(loc);
+                  var ldmrk = await http.get(
+                      'https://www.geonames.org/findNearbyPlaceName?lat=${loc.latitude}&lng=${loc.longitude}&type=json');
+                  print(json.decode(ldmrk.body)['geonames'][0]['toponymName']);
                 },
                 icon: Icon(
                   Icons.add_circle,

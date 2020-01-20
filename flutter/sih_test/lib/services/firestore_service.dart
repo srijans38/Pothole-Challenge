@@ -7,23 +7,26 @@ class Report {
   final GeoPoint location;
   final Timestamp timestamp;
   final List uid;
-  Report(
-      {this.imageRef,
-      this.landmark,
-      this.location,
-      this.timestamp,
-      this.uid,
-      this.id});
+  final String region;
+  Report({
+    this.imageRef,
+    this.landmark,
+    this.location,
+    this.timestamp,
+    this.uid,
+    this.id,
+    this.region,
+  });
 
   factory Report.fromMap(Map data, String id) {
     return (Report(
-      id: id,
-      imageRef: data['image'],
-      landmark: data['landmark'],
-      location: GeoPoint(data['location'][0], data['location'][1]),
-      timestamp: data['timestamp'],
-      uid: data['uid'],
-    ));
+        id: id,
+        imageRef: data['image'],
+        landmark: data['landmark'],
+        location: GeoPoint(data['location'][0], data['location'][1]),
+        timestamp: data['timestamp'],
+        uid: data['uid'],
+        region: data['region']));
   }
 
   Map<String, dynamic> toMap() {
@@ -33,6 +36,7 @@ class Report {
       'location': [this.location.latitude, this.location.longitude],
       'timestamp': this.timestamp,
       'uid': this.uid,
+      'region': this.region,
     };
   }
 }
