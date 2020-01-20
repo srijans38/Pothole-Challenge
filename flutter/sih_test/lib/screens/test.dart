@@ -13,11 +13,6 @@ class _TestScreenState extends State<TestScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    _firestore.collection('reports').getDocuments().then((value) {
-      value.documents.forEach((doc) {
-        print(doc.data['landmark']);
-      });
-    });
   }
 
   @override

@@ -134,10 +134,14 @@ class ProfileScreen extends StatelessWidget {
                       shrinkWrap: true,
                       itemCount: snapshot.data.documents.length,
                       itemBuilder: (context, index) {
+                        var report = Report.fromMap(
+                            docs[index].data, docs[index].documentID);
                         return Padding(
                           padding: const EdgeInsets.symmetric(
                               vertical: 8.0, horizontal: 20.0),
-                          child: ReportBox(title: docs[index].data['landmark']),
+                          child: ReportBox(
+                            report: report,
+                          ),
                         );
                       },
                     );
