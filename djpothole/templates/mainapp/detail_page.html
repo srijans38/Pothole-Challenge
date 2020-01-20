@@ -12,24 +12,53 @@
     <script>
       var id = "{{ id }}";
     </script>
-    <h1>{{ id }}</h1>
-    <script src="{% static 'js/firebaseDetail.js' %}"></script>
-    <img id="image" width="200" height="200" />
-    <div id="landmark"></div>
-    <div id="location"></div>
-    <div id="occurrence"></div>
-    <div id="region"></div>
-    <div id="status"></div>
-    <div id="timestamp"></div>
-    <div id="uid"></div>
-    <script src="{% static 'js/button.js' %}"></script>
-
-    <button onclick="workingButton(); dis()" id="accept" type="submit">
-      ACCEPT REPORT
-    </button>
-    <button onclick="completeButton(); dis()" id="complete" type="submit">
-      COMPLETE REPORT
-    </button>
+    <div
+      class="card-body col-lg-8 col-md-8 col-mb-10 align-self-center jumbotron "
+      style="background-color:#dcebfa"
+    >
+      <h4>POTHOLE ID:</h4>
+      <h5>{{ id }}</h5>
+      <script src="{% static 'js/firebaseinit.js' %}"></script>
+      <div class="row" style="margin-bottom:15px">
+        <div class="col-lg-6 col-xl-7 align-self-center">
+          <img id="image" width="200" height="200" />
+        </div>
+        <div class="col-lg-6 col-xl-5 " style="margin-top:10px">
+          <ul style="list-style-type:none">
+            <li><div id="landmark"></div></li>
+            <li><div id="location"></div></li>
+            <li><div id="occurrence"></div></li>
+            <li><div id="region"></div></li>
+            <li><div id="status"></div></li>
+            <li><div id="timestamp"></div></li>
+            <li><div id="uid"></div></li>
+          </ul>
+        </div>
+      </div>
+      <script src="{% static 'js/button.js' %}"></script>
+      <div class="row justify-content-center ">
+        <button
+          class="btn-success hvr-shrink "
+          onclick="workingButton(); dis()"
+          id="accept"
+          type="submit"
+          style="visibility: hidden;"
+        >
+          <div>ACCEPT REPORT</div>
+        </button>
+        <div style="margin-right:10px; margin-left:10px"></div>
+        <button
+          class="btn-primary hvr-shrink"
+          onclick="completeButton(); dis()"
+          id="complete"
+          type="submit"
+          style="visibility: hidden;"
+        >
+          <div>COMPLETE REPORT</div>
+        </button>
+      </div>
+    </div>
+    <script src="{% static 'js/firebaseDetail.js' %}" onload="dis()"></script>
   </body>
   {% else %}
   <script>

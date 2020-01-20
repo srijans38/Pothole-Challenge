@@ -35,13 +35,14 @@ const dis = () => {
     .onSnapshot(querySnapshot => {
       stat = querySnapshot.data().status;
       if (stat == "Working") {
-        accept.disabled = true;
+        accept.style.visibility = "hidden";
+        complete.style.visibility = "visible";
       } else if (stat == "Completed") {
-        complete.disabled = true;
-        accept.disabled = true;
+        complete.style.visibility = "hidden";
+        accept.style.visibility = "hidden";
       } else {
-        complete.disabled = false;
-        accept.disabled = false;
+        complete.style.visibility = "hidden";
+        accept.style.visibility = "visible";
       }
     });
 };

@@ -1,14 +1,28 @@
 {% extends 'base.html' %} {% load static %} {% block title %}Home{% endblock %}
 {% block content %} {% if user.is_authenticated %}
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ==" crossorigin="" />
+<link
+  rel="stylesheet"
+  href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
+  integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+  crossorigin=""
+/>
 <script>
   var b = "{{user.u.ever_logged_in}}";
   if (b == "False") {
     window.location.href = "{% url 'password_change' %}";
   }
 </script>
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ==" crossorigin="" />
-<script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js" integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew==" crossorigin=""></script>
+<link
+  rel="stylesheet"
+  href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
+  integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+  crossorigin=""
+/>
+<script
+  src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
+  integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
+  crossorigin=""
+></script>
 
 <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
@@ -18,12 +32,14 @@
     <h3 class="text-dark mb-0">Dashboard</h3>
   </div>
   <div class="row">
-    <div class=" mb-4 col-lg-4 col-xl-4 col-md-12">
+    <div class=" mb-4 col-lg-4 col-xl-4 col-md-12 hvr-shrink">
       <div class="card shadow border-left-primary py-2">
         <div class="card-body">
           <div class="row align-items-center no-gutters">
             <div class="col mr-2">
-              <div class="text-uppercase text-primary font-weight-bold text-xs mb-1">
+              <div
+                class="text-uppercase text-primary font-weight-bold text-xs mb-1"
+              >
                 <span>reports</span>
               </div>
               <div class="text-dark font-weight-bold h5 mb-0">
@@ -37,12 +53,14 @@
         </div>
       </div>
     </div>
-    <div class=" mb-4 col-lg-4 col-xl-4 col-md-12">
+    <div class=" mb-4 col-lg-4 col-xl-4 col-md-12 hvr-shrink">
       <div class="card shadow border-left-success py-2">
         <div class="card-body">
           <div class="row align-items-center no-gutters">
             <div class="col mr-2">
-              <div class="text-uppercase text-success font-weight-bold text-xs mb-1">
+              <div
+                class="text-uppercase text-success font-weight-bold text-xs mb-1"
+              >
                 <span>completed</span>
               </div>
               <div class="text-dark font-weight-bold h5 mb-0">
@@ -56,12 +74,14 @@
         </div>
       </div>
     </div>
-    <div class=" mb-4 col-lg-5 col-xl-4 col-md-12">
+    <div class=" mb-4 col-lg-4 col-xl-4 col-md-12 hvr-shrink">
       <div class="card shadow border-left-warning py-2">
         <div class="card-body">
           <div class="row align-items-center no-gutters">
             <div class="col mr-2">
-              <div class="text-uppercase text-warning font-weight-bold text-xs mb-1">
+              <div
+                class="text-uppercase text-warning font-weight-bold text-xs mb-1"
+              >
                 <span>Pending reports</span>
               </div>
               <div class="text-dark font-weight-bold h5 mb-0">
@@ -69,7 +89,9 @@
               </div>
             </div>
             <div class="col-auto">
-              <i class="fas fa-comments fa-2x text-gray-300 fas fa-exclamation-circle"></i>
+              <i
+                class="fas fa-comments fa-2x text-gray-300 fas fa-exclamation-circle"
+              ></i>
             </div>
           </div>
         </div>
@@ -77,16 +99,26 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-lg-7 col-xl-8">
+    <div class="col-lg-7 col-xl-8 ">
       <!-- <a href="/mainapp/map"> -->
       <div class="card shadow mb-4">
-        <div class="card-header d-flex justify-content-between align-items-center">
+        <div
+          class="card-header d-flex justify-content-between align-items-center"
+        >
           <h6 class="text-primary font-weight-bold m-0">POTHOLE</h6>
-
         </div>
         <div class="card-body">
-          <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ==" crossorigin="" />
-          <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js" integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew==" crossorigin=""></script>
+          <link
+            rel="stylesheet"
+            href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
+            integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+            crossorigin=""
+          />
+          <script
+            src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
+            integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
+            crossorigin=""
+          ></script>
 
           <div id="mapid"></div>
         </div>
@@ -102,26 +134,29 @@
       </div>
     </div>
 
-    <div class="col-lg-4 col-xl-4">
+    <div class="col-lg-5 col-xl-4 hvr-shrink ">
       <div class="card shadow mb-4">
-        <div class="card-header d-flex justify-content-between align-items-center">
-          <h6 class="text-primary font-weight-bold m-0">CHART</h6>
+        <div
+          class="card-header d-flex justify-content-between align-items-center"
+        >
+          <h6 class=" text-primary font-weight-bold m-0">CHART</h6>
         </div>
         <div class="card-body">
           <div class="chart-area"><canvas id="chartcanvas"></canvas></div>
           <div class="text-center small mt-4">
-            <span class="mr-2"><i class="fas fa-circle text-success"></i>&nbsp;COMPLETED/RESOLVED</span>
-            <span class="mr-2"><i class="fas fa-circle" style="color: #f6c23e"></i>&nbsp;PENDING</span>
+            <span class="mr-2"
+              ><i class="fas fa-circle text-success"></i
+              >&nbsp;COMPLETED/RESOLVED</span
+            >
+            <span class="mr-2"
+              ><i class="fas fa-circle" style="color: #f6c23e"></i
+              >&nbsp;PENDING</span
+            >
           </div>
         </div>
       </div>
     </div>
   </div>
-</div>
-
-<div class="jumbotron">
-  <!-- <p><a href="/mainapp/map">Map</a></p> -->
-  <p><a href="/mainapp/feedback">Feedback</a></p>
 </div>
 
 <div class="list-group">
@@ -141,12 +176,14 @@
     type: "doughnut",
     data: {
       labels: ["resolved", "pending"],
-      datasets: [{
-        label: "",
-        backgroundColor: ["#1cc88a", "#f6c23e"],
-        borderColor: ["#ffffff", "#ffffff"],
-        data: ["0", "0"]
-      }]
+      datasets: [
+        {
+          label: "",
+          backgroundColor: ["#1cc88a", "#f6c23e"],
+          borderColor: ["#ffffff", "#ffffff"],
+          data: ["0", "0"]
+        }
+      ]
     },
     options: {
       maintainAspectRatio: false,

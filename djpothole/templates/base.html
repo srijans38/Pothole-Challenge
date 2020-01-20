@@ -20,6 +20,11 @@
       rel="stylesheet"
       href="https://use.fontawesome.com/releases/v5.7.1/css/all.css"
     />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css"
+    />
+    <link rel="stylesheet" href="{% static 'bootstrap/css/hover.css' %}" />
   </head>
 
   <body id="page-top">
@@ -28,10 +33,13 @@
         class="navbar navbar-dark align-items-start sidebar sidebar-dark accordion bg-gradient-primary p-1"
         style="background-color:rgb(123,230,230);background-image: linear-gradient(180deg,rgb(123,230,230) 10%,#224abe);"
       >
-        <div class="container-fluid d-flex flex-column p-0" style="position: absolute;">
+        <div
+          class="container-fluid d-flex flex-column p-0"
+          style="position: absolute;"
+        >
           <a
             class="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0"
-            href="HOME.html"
+            href="{% url 'mainapp:home' %}"
           >
             <div class="sidebar-brand-text mx-3"><span>SIH</span></div>
           </a>
@@ -150,8 +158,7 @@
                         class="d-flex align-items-center dropdown-item"
                         href="#"
                       >
-
-                         </a
+                      </a
                       ><a
                         class="text-center dropdown-item small text-gray-500"
                         href="#"
@@ -161,7 +168,7 @@
                   </div>
                 </li>
 
-                <div class="d-none d-sm-block topbar-divider"></div>
+                <div class="d-block topbar-divider"></div>
                 <li class="nav-item dropdown no-arrow" role="presentation">
                   <div class="nav-item dropdown no-arrow">
                     <a
