@@ -68,4 +68,8 @@ class FirestoreService {
   Future<DocumentReference> uploadReport(Report report) async {
     return await _firestore.collection('reports').add(report.toMap());
   }
+
+  Future<void> deleteReport(String id) async {
+    return await _firestore.collection('reports').document(id).delete();
+  }
 }
