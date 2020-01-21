@@ -18,7 +18,7 @@ filteredDocuments.sort((a, b) => {
   return b.data().occurrence - a.data().occurrence;
 });
 
-var mymap = L.map('mapid').setView([filteredDocuments[0].data().location.latitude, filteredDocuments[0].data().location.longitude], 13);
+var mymap = L.map('mapid').setView([filteredDocuments[0].data().location[0], filteredDocuments[0].data().location[1]], 13);
 L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
     attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
     maxZoom: 18,
@@ -28,10 +28,10 @@ L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={
 
 
 const lat=filteredDocuments.map((doc)=>{
-    return doc.data().location.latitude
+    return doc.data().location[0]
 })
 const long=filteredDocuments.map((doc)=>{
-    return doc.data().location.longitude
+    return doc.data().location[1]
 })
 for(i=0;i<lat.length;i++){
    var marker = L.marker([lat[i],long[i]], {icon : potholeMarker}).addTo(mymap);
