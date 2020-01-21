@@ -8,8 +8,9 @@ import 'package:sih_test/utils/upload_bottom_modal.dart';
 
 class PictureBottomModal extends StatefulWidget {
   final String imagePath;
+  final BuildContext progressContext;
 
-  PictureBottomModal({this.imagePath});
+  PictureBottomModal({this.imagePath, this.progressContext});
 
   @override
   _PictureBottomModalState createState() => _PictureBottomModalState();
@@ -84,6 +85,7 @@ class _PictureBottomModalState extends State<PictureBottomModal> {
                                       child: UploadBottomModal(
                                         imageRef: imageRef,
                                         uid: user.uid,
+                                        progressContext: widget.progressContext,
                                       )),
                                 );
                               });

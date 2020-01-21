@@ -8,6 +8,10 @@ class Report {
   final Timestamp timestamp;
   final List uid;
   final String region;
+  final String status;
+  final String feedback;
+  final int occurrence;
+
   Report({
     this.imageRef,
     this.landmark,
@@ -16,17 +20,24 @@ class Report {
     this.uid,
     this.id,
     this.region,
+    this.status,
+    this.feedback,
+    this.occurrence,
   });
 
   factory Report.fromMap(Map data, String id) {
     return (Report(
-        id: id,
-        imageRef: data['image'],
-        landmark: data['landmark'],
-        location: GeoPoint(data['location'][0], data['location'][1]),
-        timestamp: data['timestamp'],
-        uid: data['uid'],
-        region: data['region']));
+      id: id,
+      imageRef: data['image'],
+      landmark: data['landmark'],
+      location: GeoPoint(data['location'][0], data['location'][1]),
+      timestamp: data['timestamp'],
+      uid: data['uid'],
+      region: data['region'],
+      status: data['status'],
+      feedback: data['feedback'],
+      occurrence: data['occurrence'],
+    ));
   }
 
   Map<String, dynamic> toMap() {
@@ -37,6 +48,9 @@ class Report {
       'timestamp': this.timestamp,
       'uid': this.uid,
       'region': this.region,
+      'status': this.status,
+      'feedback': this.feedback,
+      'occurrence': this.occurrence,
     };
   }
 }

@@ -63,10 +63,13 @@ class ReportScreen extends StatelessWidget {
             ),
           ),
           Hero(
-            tag: 'img',
-            child: Image.network(
-              imgUrl,
-              height: 500.0,
+            tag: report.id,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(0),
+              child: Image.network(
+                imgUrl,
+                height: 500.0,
+              ),
             ),
           ),
           RaisedButton(

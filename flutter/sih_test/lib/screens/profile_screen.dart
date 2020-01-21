@@ -5,7 +5,12 @@ import 'package:sih_test/services/firebase_auth_service.dart';
 import 'package:sih_test/services/firestore_service.dart';
 import 'package:sih_test/utils/report_box.dart';
 
-class ProfileScreen extends StatelessWidget {
+class ProfileScreen extends StatefulWidget {
+  @override
+  _ProfileScreenState createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -122,6 +127,7 @@ class ProfileScreen extends StatelessWidget {
                 stream: Provider.of<FirestoreService>(context)
                     .getReportsByUser(Provider.of<User>(context).uid),
                 builder: (context, snapshot) {
+                  print(snapshot.connectionState);
                   if (snapshot.hasData) {
                     var docs = snapshot.data.documents;
                     return ListView.builder(
