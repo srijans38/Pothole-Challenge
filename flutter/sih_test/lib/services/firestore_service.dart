@@ -80,10 +80,20 @@ class FirestoreService {
   }
 
   Future<DocumentReference> uploadReport(Report report) async {
+    await _firestore.collection('leaderboard').document(report.uid[0]).setData({
+      'points': FieldValue.increment(5),
+    }, merge: true);
     return await _firestore.collection('reports').add(report.toMap());
   }
 
-  Future<void> deleteReport(String id) async {
+  Future<DocumentSnapshot> getPointsByUser(String uid) {
+    return _firestore.collection('leaderboard').document(uid).get();
+  }
+
+  Future<void> deleteReport(String id, String uid) async {
+    await _firestore.collection('leaderboard').document(uid).setData({
+      'points': FieldValue.increment(-5),
+    }, merge: true);
     return await _firestore.collection('reports').document(id).delete();
   }
 }
