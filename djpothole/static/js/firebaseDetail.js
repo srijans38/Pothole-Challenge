@@ -21,13 +21,14 @@ db.collection("reports").onSnapshot(querySnapshot => {
     var pathReference = storage.ref(currentReport[0].data().image);
     pathReference.getDownloadURL().then(function(url) {
       img.src = url;
+
     });
     img.alt = "Image Not Found.";
     landmark.innerHTML = currentReport[0].data().landmark;
     location.innerHTML =
-      currentReport[0].data().location.latitude +
+      currentReport[0].data().location[0] +
       "  " +
-      currentReport[0].data().location.longitude;
+      currentReport[0].data().location[1];
     occurrence.innerHTML = currentReport[0].data().occurrence;
     region.innerHTML = currentReport[0].data().region;
     status.innerHTML = currentReport[0].data().status;

@@ -1,22 +1,32 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Report {
+  final String id;
   final String imageRef;
   final String landmark;
   final GeoPoint location;
   final Timestamp timestamp;
   final List uid;
-  Report(
-      {this.imageRef, this.landmark, this.location, this.timestamp, this.uid});
+  final String region;
+  Report({
+    this.imageRef,
+    this.landmark,
+    this.location,
+    this.timestamp,
+    this.uid,
+    this.id,
+    this.region,
+  });
 
-  factory Report.fromMap(Map data) {
+  factory Report.fromMap(Map data, String id) {
     return (Report(
-      imageRef: data['image'],
-      landmark: data['landmark'],
-      location: data['location'],
-      timestamp: data['timestamp'],
-      uid: data['uid'],
-    ));
+        id: id,
+        imageRef: data['image'],
+        landmark: data['landmark'],
+        location: GeoPoint(data['location'][0], data['location'][1]),
+        timestamp: data['timestamp'],
+        uid: data['uid'],
+        region: data['region']));
   }
 
   Map<String, dynamic> toMap() {
@@ -26,6 +36,7 @@ class Report {
       'location': [this.location.latitude, this.location.longitude],
       'timestamp': this.timestamp,
       'uid': this.uid,
+      'region': this.region,
     };
   }
 }
@@ -37,8 +48,7 @@ class FirestoreService {
     final reportDocs = await _firestore.collection('reports').getDocuments();
     List<Report> reports = [];
     for (var report in reportDocs.documents) {
-      print(report.data);
-      reports.add(Report.fromMap(report.data));
+      reports.add(Report.fromMap(report.data, report.documentID));
     }
     return reports;
   }
@@ -57,5 +67,9 @@ class FirestoreService {
 
   Future<DocumentReference> uploadReport(Report report) async {
     return await _firestore.collection('reports').add(report.toMap());
+  }
+
+  Future<void> deleteReport(String id) async {
+    return await _firestore.collection('reports').document(id).delete();
   }
 }

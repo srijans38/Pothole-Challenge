@@ -1,6 +1,9 @@
+import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 import 'package:sih_test/services/auth_widget.dart';
 import 'package:sih_test/services/firestore_service.dart';
@@ -61,10 +64,15 @@ class _UploadBottomModalState extends State<UploadBottomModal> {
               color: Colors.blueAccent,
               onPressed: () async {
                 Position position = await Geolocator().getCurrentPosition();
+                var regionJson = await http.get(
+                    'https://www.geonames.org/findNearbyPlaceName?lat=${position.latitude}&lng=${position.longitude}&type=json');
+                String region =
+                    json.decode(regionJson.body)['geonames'][0]['toponymName'];
                 final report = Report(
                   uid: [widget.uid],
                   imageRef: widget.imageRef,
                   landmark: landmark,
+                  region: region,
                   location: GeoPoint(position.latitude, position.longitude),
                   timestamp: Timestamp.now(),
                 );

@@ -17,18 +17,7 @@ class _MainScreenState extends State<MainScreen> {
   final List<Widget> _children = [
     HomeScreen(),
     Center(
-      child: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            RawMaterialButton(
-              constraints: BoxConstraints(minHeight: 200.0),
-              onPressed: () {},
-              child: Text('Report a new pothole'),
-            )
-          ],
-        ),
-      ),
+      child: Text('Leaderboard'),
     ),
     ProfileScreen(),
   ];
@@ -42,7 +31,10 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _children[_currentIndex],
+      body: IndexedStack(
+        index: _currentIndex,
+        children: _children,
+      ),
       bottomNavigationBar: BottomNavigationBar(
         onTap: onBottomTapped,
         currentIndex: _currentIndex,
@@ -53,8 +45,8 @@ class _MainScreenState extends State<MainScreen> {
             title: Text('Home'),
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.camera_alt),
-            title: Text('Report'),
+            icon: Icon(Icons.people),
+            title: Text('Leaderboard'),
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person),

@@ -31,4 +31,8 @@ class FirebaseStorageService {
   Future<String> getDownloadURL(String imageRef) async {
     return await _firebaseStorage.ref().child(imageRef).getDownloadURL();
   }
+
+  Future<void> deleteImage(String imageRef) async {
+    return await _firebaseStorage.ref().child(imageRef).delete();
+  }
 }

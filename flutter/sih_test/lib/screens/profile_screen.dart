@@ -31,16 +31,11 @@ class ProfileScreen extends StatelessWidget {
             children: <Widget>[
               IconButton(
                 onPressed: () async {
-                  final report = Report(
-                      uid: [Provider.of<User>(context, listen: false).uid],
-                      imageRef: 'reports/hello',
-                      landmark: 'hello',
-                      location: GeoPoint(20.222, 30.222),
-                      timestamp: Timestamp.now());
-                  Provider.of<FirestoreService>(context, listen: false)
-                      .uploadReport(report)
-                      .then((value) {
-                    print(value.path);
+                  var reports = await Provider.of<FirestoreService>(context,
+                          listen: false)
+                      .getReports();
+                  reports.forEach((e) {
+                    print(e.id);
                   });
                 },
                 icon: Icon(
@@ -134,16 +129,40 @@ class ProfileScreen extends StatelessWidget {
                       shrinkWrap: true,
                       itemCount: snapshot.data.documents.length,
                       itemBuilder: (context, index) {
+                        var report = Report.fromMap(
+                            docs[index].data, docs[index].documentID);
                         return Padding(
                           padding: const EdgeInsets.symmetric(
                               vertical: 8.0, horizontal: 20.0),
-                          child: ReportBox(title: docs[index].data['landmark']),
+                          child: ReportBox(
+                            report: report,
+                          ),
                         );
                       },
                     );
                   }
-                  return SizedBox(
-                      height: 20.0, child: CircularProgressIndicator());
+                  return FutureBuilder(
+                      future: Future.delayed(Duration(seconds: 5)),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState == ConnectionState.done) {
+                          print('Done');
+                          return Center(
+                            child: Text(
+                              'No reports found.',
+                              style: TextStyle(fontFamily: 'Montserrat'),
+                            ),
+                          );
+                        }
+                        return Center(
+                          child: Container(
+                            constraints: BoxConstraints(
+                              maxWidth: 50.0,
+                              maxHeight: 50.0,
+                            ),
+                            child: CircularProgressIndicator(),
+                          ),
+                        );
+                      });
                 },
               )
             ],
