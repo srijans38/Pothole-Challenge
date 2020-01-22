@@ -27,7 +27,7 @@
     filteredDocuments.forEach(doc => {
     var li = document.createElement("div");
     li.className = "card-body";
-    li.innerHTML = `<div style="color:white; background-color:#4285f4; box-shadow:3px 3px 3px 3px;  border-radius: 25px;  padding:20px;  cursor:pointer; data-toggle="tooltip" title="feedback from ${doc.id}"><h2>User ID:${doc.id}</h2><br><h3>Feedback:${doc.data().feedback}</h3><div>`;
+    li.innerHTML = `<div style="color:white; background-color:#4285f4; box-shadow:3px 3px 3px 3px;  border-radius: 25px;  padding:20px;  cursor:pointer; data-toggle="tooltip" title="feedback from ${doc.id}"><h2>Report ID:${doc.id}</h2><br><h3>Feedback:${doc.data().feedback}</h3><div>`;
     fback.appendChild(li);
     });
 
