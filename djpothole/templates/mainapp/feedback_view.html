@@ -1,26 +1,12 @@
 {% extends 'base.html' %} {% load static %} {% block title %}FEEDBACK{% endblock %} {% block content %} {% if user.is_authenticated %}
-
+<script src="{% static 'js/firebaseinit.js' %}"></script>
+<link href="./feedback.css">
 <script>
   var b = "{{user.u.ever_logged_in}}";
   if (b == "False") {
     window.location.href = "{% url 'password_change' %}";
   }
-</script>
-<script>
   var user = "{{user.u.region}}";
-
-  var firebaseConfig = {
-    apiKey: "AIzaSyAdyRhmquuWcLqF5F9xFhiwfvRsjvWnEtc",
-    authDomain: "sih-test-8c936.firebaseapp.com",
-    databaseURL: "https://sih-test-8c936.firebaseio.com",
-    projectId: "sih-test-8c936",
-    storageBucket: "sih-test-8c936.appspot.com",
-    messagingSenderId: "209924411187",
-    appId: "1:209924411187:web:2d1279bbd788bd2351f846"
-  };
-  // Initialize Firebase
-  firebase.initializeApp(firebaseConfig);
-  var db = firebase.firestore();
   var fdb = db.collection("reports");
   fdb.where("status", "in", ["Completed"]).onSnapshot(querySnapshot => {
     const documents = [];
@@ -37,23 +23,23 @@
     });
 
     var fback = document.getElementById("feedback");
-    var fbackchild = document.createElement("p");
+    // var fbackchild = document.createElement("p");
     fDocuments = filteredDocuments.map(doc => {
       return doc.data();
     });
 
-    console.log(fDocuments);
     fDocuments.forEach(doc => {
-      fbackchild.innerHTML += `${doc.uid}  ${doc.feedback}<br>`;
+    var li = document.createElement("div");
+    li.className = "card-body";
+    li.innerHTML = `<div style="background-color:white;  border-radius: 25px;   border: 2px solid black;  padding:20px;  cursor:pointer; data-toggle="tooltip" title="feedback from ${doc.uid}"><h2>User ID:${doc.uid}</h2><br><h3>Feedback:${doc.feedback}</h3><div>`;
+    fback.appendChild(li);
     });
 
-    fback.appendChild(fbackchild);
+    //fback.appendChild(fbackchild);
   });
 </script>
-<div
-  id="feedback"
-  class="card-body col-lg-6 col-md-8 col-mb-10 align-self-center jumbotron "
-  style="margin-top:15px"
+<div style=" margin: auto; width:100%;height:100%;"
+  id="feedback" class="bg-gradient-info"
 ></div>
 {% else %}
 <script>
