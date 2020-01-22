@@ -5,7 +5,12 @@ import 'package:sih_test/services/firebase_auth_service.dart';
 import 'package:sih_test/services/firestore_service.dart';
 import 'package:sih_test/utils/report_box.dart';
 
-class ProfileScreen extends StatelessWidget {
+class ProfileScreen extends StatefulWidget {
+  @override
+  _ProfileScreenState createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -89,8 +94,30 @@ class ProfileScreen extends StatelessWidget {
                 height: MediaQuery.of(context).size.height / 40,
               ),
               Center(
-                child: Text(
-                  'Level 2',
+                child: FutureBuilder<DocumentSnapshot>(
+                  future: Provider.of<FirestoreService>(context)
+                      .getPointsByUser(Provider.of<User>(context).uid),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      final level =
+                          (snapshot.data.data['points'] / 20).floor() + 1;
+                      return Column(
+                        children: <Widget>[
+                          Center(
+                            child: Text(
+                              'Level $level',
+                            ),
+                          ),
+                          SizedBox(
+                            height: MediaQuery.of(context).size.height / 40,
+                          ),
+                          Text('Your Points : ' +
+                              snapshot.data.data['points'].toString()),
+                        ],
+                      );
+                    }
+                    return Text('No points');
+                  },
                 ),
               ),
               SizedBox(
@@ -122,26 +149,7 @@ class ProfileScreen extends StatelessWidget {
                 stream: Provider.of<FirestoreService>(context)
                     .getReportsByUser(Provider.of<User>(context).uid),
                 builder: (context, snapshot) {
-                  if (snapshot.hasData) {
-                    var docs = snapshot.data.documents;
-                    return ListView.builder(
-                      physics: NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      itemCount: snapshot.data.documents.length,
-                      itemBuilder: (context, index) {
-                        var report = Report.fromMap(
-                            docs[index].data, docs[index].documentID);
-                        return Padding(
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 8.0, horizontal: 20.0),
-                          child: ReportBox(
-                            report: report,
-                          ),
-                        );
-                      },
-                    );
-                  }
-                  return FutureBuilder(
+                  final _loader = FutureBuilder(
                       future: Future.delayed(Duration(seconds: 5)),
                       builder: (context, snapshot) {
                         if (snapshot.connectionState == ConnectionState.done) {
@@ -163,6 +171,29 @@ class ProfileScreen extends StatelessWidget {
                           ),
                         );
                       });
+                  if (snapshot.data != null) {
+                    if (snapshot.data.documents.isEmpty) {
+                      return _loader;
+                    }
+                    var docs = snapshot.data.documents;
+                    return ListView.builder(
+                      physics: NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      itemCount: snapshot.data.documents.length,
+                      itemBuilder: (context, index) {
+                        var report = Report.fromMap(
+                            docs[index].data, docs[index].documentID);
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 8.0, horizontal: 20.0),
+                          child: ReportBox(
+                            report: report,
+                          ),
+                        );
+                      },
+                    );
+                  }
+                  return _loader;
                 },
               )
             ],

@@ -34,6 +34,7 @@ dependencies:
   geocoder: ^0.2.1
   http:
   intl:
+  flutter_progress_hud:
 
 
   # The following adds the Cupertino Icons font to your application.

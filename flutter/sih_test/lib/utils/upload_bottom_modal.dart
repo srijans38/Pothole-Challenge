@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_progress_hud/flutter_progress_hud.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
@@ -12,8 +13,9 @@ import 'package:sih_test/utils/text_field.dart';
 class UploadBottomModal extends StatefulWidget {
   final String imageRef;
   final String uid;
+  final BuildContext progressContext;
 
-  UploadBottomModal({this.imageRef, this.uid});
+  UploadBottomModal({this.imageRef, this.uid, this.progressContext});
 
   @override
   _UploadBottomModalState createState() => _UploadBottomModalState();
@@ -24,7 +26,6 @@ class _UploadBottomModalState extends State<UploadBottomModal> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     print(widget.imageRef);
   }
@@ -63,6 +64,10 @@ class _UploadBottomModalState extends State<UploadBottomModal> {
               ),
               color: Colors.blueAccent,
               onPressed: () async {
+                Navigator.pop(context);
+                Navigator.pop(context);
+                final progress = ProgressHUD.of(widget.progressContext);
+                progress.showWithText('Uploading...');
                 Position position = await Geolocator().getCurrentPosition();
                 var regionJson = await http.get(
                     'https://www.geonames.org/findNearbyPlaceName?lat=${position.latitude}&lng=${position.longitude}&type=json');
@@ -75,13 +80,17 @@ class _UploadBottomModalState extends State<UploadBottomModal> {
                   region: region,
                   location: GeoPoint(position.latitude, position.longitude),
                   timestamp: Timestamp.now(),
+                  status: 'Reported',
+                  occurrence: 1,
                 );
-                Provider.of<FirestoreService>(context, listen: false)
+                Provider.of<FirestoreService>(widget.progressContext,
+                        listen: false)
                     .uploadReport(report)
                     .then((value) {
                   print(value.path);
+                  progress.dismiss();
                   Navigator.pushAndRemoveUntil(
-                      context,
+                      widget.progressContext,
                       MaterialPageRoute(builder: (context) => AuthWidget()),
                       (Route route) => false);
                 });

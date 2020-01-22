@@ -45,16 +45,16 @@ class _ReportBoxState extends State<ReportBox> {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            ClipRRect(
-              borderRadius: BorderRadius.circular(20.0),
-              child: FutureBuilder<String>(
-                future: Provider.of<FirebaseStorageService>(context)
-                    .getDownloadURL(widget.report.imageRef),
-                builder: (context, snapshot) {
-                  if (snapshot.hasData) {
-                    imgUrl = snapshot.data;
-                    return Hero(
-                      tag: 'img',
+            FutureBuilder<String>(
+              future: Provider.of<FirebaseStorageService>(context)
+                  .getDownloadURL(widget.report.imageRef),
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  imgUrl = snapshot.data;
+                  return Hero(
+                    tag: widget.report.id,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(20.0),
                       child: Image.network(
                         snapshot.data,
                         height: MediaQuery.of(context).size.height / 4,
@@ -81,20 +81,20 @@ class _ReportBoxState extends State<ReportBox> {
                           );
                         },
                       ),
-                    );
-                  }
-                  return SizedBox(
-                    width: MediaQuery.of(context).size.width / 3.5,
-                    height: MediaQuery.of(context).size.height / 4,
-                    child: Center(
-                      child: CircularProgressIndicator(
-                        backgroundColor: Colors.grey,
-                        valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-                      ),
                     ),
                   );
-                },
-              ),
+                }
+                return SizedBox(
+                  width: MediaQuery.of(context).size.width / 3.5,
+                  height: MediaQuery.of(context).size.height / 4,
+                  child: Center(
+                    child: CircularProgressIndicator(
+                      backgroundColor: Colors.grey,
+                      valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                    ),
+                  ),
+                );
+              },
             ),
             SizedBox(
               width: MediaQuery.of(context).size.width / 20,
@@ -122,7 +122,17 @@ class _ReportBoxState extends State<ReportBox> {
                   ),
                 ),
                 SizedBox(
-                  height: MediaQuery.of(context).size.height / 20,
+                  height: MediaQuery.of(context).size.height / 40,
+                ),
+                Text(
+                  widget.report.status,
+                  style: TextStyle(
+                    fontFamily: 'Montserrat',
+                    fontSize: 15,
+                  ),
+                ),
+                SizedBox(
+                  height: MediaQuery.of(context).size.height / 40,
                 ),
                 Text(
                   'Created on',
