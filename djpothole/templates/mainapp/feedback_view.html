@@ -31,7 +31,7 @@
     fDocuments.forEach(doc => {
     var li = document.createElement("div");
     li.className = "card-body";
-    li.innerHTML = `<div style="background-color:white;  border-radius: 25px;   border: 2px solid black;  padding:20px;  cursor:pointer; data-toggle="tooltip" title="feedback from ${doc.uid}"><h2>User ID:${doc.uid}</h2><br><h3>Feedback:${doc.feedback}</h3><div>`;
+    li.innerHTML = `<div style="background-color:white; box-shadow:3px 3px 3px 3px;  border-radius: 25px;   border: 2px solid black;  padding:20px;  cursor:pointer; data-toggle="tooltip" title="feedback from ${doc.uid}"><h2>User ID:${doc.uid}</h2><br><h3>Feedback:${doc.feedback}</h3><div>`;
     fback.appendChild(li);
     });
 
