@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sih_test/screens/test.dart';
 import 'package:sih_test/services/firebase_auth_service.dart';
 import 'package:sih_test/services/firestore_service.dart';
 import 'package:sih_test/utils/report_box.dart';
@@ -36,12 +37,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
             children: <Widget>[
               IconButton(
                 onPressed: () async {
-                  var reports = await Provider.of<FirestoreService>(context,
-                          listen: false)
-                      .getReports();
-                  reports.forEach((e) {
-                    print(e.id);
-                  });
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => TestScreen()));
                 },
                 icon: Icon(
                   Icons.add_circle,
