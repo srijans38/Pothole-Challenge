@@ -130,14 +130,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 height: MediaQuery.of(context).size.height / 40,
               ),
               Center(
-                child: FutureBuilder<DocumentSnapshot>(
-                  future: Provider.of<FirestoreService>(context)
+                child: StreamBuilder<DocumentSnapshot>(
+                  stream: Provider.of<FirestoreService>(context)
                       .getPointsByUser(Provider.of<User>(context).uid),
                   builder: (context, snapshot) {
                     if (snapshot.hasData ? snapshot.data.data != null : false) {
                       print(snapshot.data.data);
                       final level =
-                          (snapshot.data.data['points'] / 20).floor() + 1;
+                          (snapshot.data.data['points'] / 100).floor() + 1;
                       return Column(
                         children: <Widget>[
                           Center(

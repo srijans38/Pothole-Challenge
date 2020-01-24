@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:sih_test/screens/home_screen.dart';
+import 'package:sih_test/screens/leaderboard.dart';
 import 'package:sih_test/screens/profile_screen.dart';
 
 FirebaseAuth _auth = FirebaseAuth.instance;
@@ -16,9 +17,7 @@ class _MainScreenState extends State<MainScreen> {
   int _currentIndex = 0;
   final List<Widget> _children = [
     HomeScreen(),
-    Center(
-      child: Text('Leaderboard'),
-    ),
+    LeaderboardScreen(),
     ProfileScreen(),
   ];
 

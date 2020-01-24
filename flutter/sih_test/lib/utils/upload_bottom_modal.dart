@@ -27,7 +27,6 @@ class _UploadBottomModalState extends State<UploadBottomModal> {
   @override
   void initState() {
     super.initState();
-    print(widget.imageRef);
   }
 
   @override
@@ -69,10 +68,16 @@ class _UploadBottomModalState extends State<UploadBottomModal> {
                 final progress = ProgressHUD.of(widget.progressContext);
                 progress.showWithText('Uploading...');
                 Position position = await Geolocator().getCurrentPosition();
-                var regionJson = await http.get(
-                    'https://www.geonames.org/findNearbyPlaceName?lat=${position.latitude}&lng=${position.longitude}&type=json');
-                String region =
-                    json.decode(regionJson.body)['geonames'][0]['toponymName'];
+                String region;
+                try {
+                  var regionJson = await http.get(
+                      'https://www.geonames.org/findNearbyPlaceName?lat=${position.latitude}&lng=${position.longitude}&type=json');
+                  region = json.decode(regionJson.body)['geonames'][0]
+                      ['toponymName'];
+                } catch (e) {
+                  print(e);
+                  region = 'Unknown';
+                }
                 final report = Report(
                   uid: [widget.uid],
                   imageRef: widget.imageRef,
