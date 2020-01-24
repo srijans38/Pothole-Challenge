@@ -4,10 +4,11 @@ import 'package:google_sign_in/google_sign_in.dart';
 
 @immutable
 class User {
-  const User({@required this.uid, this.email, this.phoneNo});
+  const User({@required this.uid, this.email, this.phoneNo, this.displayName});
   final String uid;
   final String email;
   final String phoneNo;
+  final String displayName;
 }
 
 class FirebaseAuthService {
@@ -17,7 +18,11 @@ class FirebaseAuthService {
   User _userFromFirebase(FirebaseUser user) {
     return user == null
         ? null
-        : User(uid: user.uid, email: user.email, phoneNo: user.phoneNumber);
+        : User(
+            uid: user.uid,
+            email: user.email,
+            phoneNo: user.phoneNumber,
+            displayName: user.displayName);
   }
 
   Future<FirebaseUser> getCurrentUser() async {
@@ -61,6 +66,15 @@ class FirebaseAuthService {
   Future<User> signInAnonymously() async {
     final authResult = await _firebaseAuth.signInAnonymously();
     return _userFromFirebase(authResult.user);
+  }
+
+  Future<void> updateProfile({String displayName}) async {
+    var updateInfo = UserUpdateInfo();
+    updateInfo.displayName = displayName;
+    var user = await getCurrentUser();
+    await user.updateProfile(updateInfo);
+    user = await getCurrentUser();
+    print(user.displayName);
   }
 
   Future<void> signOut() async {

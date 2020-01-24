@@ -86,7 +86,7 @@ class FirestoreService {
     return await _firestore.collection('reports').add(report.toMap());
   }
 
-  Future<DocumentSnapshot> getPointsByUser(String uid) {
+  Future<DocumentSnapshot> getPointsByUser(String uid) async {
     return _firestore.collection('leaderboard').document(uid).get();
   }
 

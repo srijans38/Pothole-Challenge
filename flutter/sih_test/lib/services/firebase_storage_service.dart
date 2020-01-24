@@ -28,6 +28,16 @@ class FirebaseStorageService {
     return File(filepath);
   }
 
+  Future<String> uploadAvatar(String uid, String imagePath) async {
+    StorageReference storageReference =
+        _firebaseStorage.ref().child('avatars/$uid/avatar.png');
+    StorageUploadTask uploadTask = storageReference.putFile(File(imagePath));
+    uploadTask.events.listen((data) {
+      print(data.snapshot.bytesTransferred);
+    });
+    return await storageReference.getPath();
+  }
+
   Future<String> getDownloadURL(String imageRef) async {
     return await _firebaseStorage.ref().child(imageRef).getDownloadURL();
   }
