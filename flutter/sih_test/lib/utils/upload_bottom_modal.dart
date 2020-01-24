@@ -68,12 +68,18 @@ class _UploadBottomModalState extends State<UploadBottomModal> {
                 final progress = ProgressHUD.of(widget.progressContext);
                 progress.showWithText('Uploading...');
                 Position position = await Geolocator().getCurrentPosition();
+                Map geocode;
                 String region;
                 try {
                   var regionJson = await http.get(
-                      'https://www.geonames.org/findNearbyPlaceName?lat=${position.latitude}&lng=${position.longitude}&type=json');
-                  region = json.decode(regionJson.body)['geonames'][0]
-                      ['toponymName'];
+                      'https://www.geocode.xyz/${position.latitude},${position.longitude}?json=1');
+                  geocode = json.decode(regionJson.body);
+                  region = geocode['staddress'] +
+                      ',' +
+                      geocode['poi']['name'] +
+                      ',' +
+                      geocode['poi']['addr-street'];
+                  print(region);
                 } catch (e) {
                   print(e);
                   region = 'Unknown';
