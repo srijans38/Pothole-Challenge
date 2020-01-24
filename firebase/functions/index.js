@@ -35,7 +35,7 @@ exports.incrementPointForApproval = docRef.onUpdate((change, context) => {
     const newValue = change.after.data();
     const userId = change.after.data().uid[0];
 
-    if(oldValue.staus === 'Reported' && newValue.status === 'Working') {
+    if(oldValue.status === 'Reported' && newValue.status === 'Working') {
         return db.doc('leaderboard/'+userId).update({points : admin.firestore.FieldValue.increment(15)});
     }
 });
@@ -45,7 +45,7 @@ exports.incrementPointForCompletion = docRef.onUpdate((change, context) => {
     const newValue = change.after.data();
     const userId = change.after.data().uid[0];
 
-    if(oldValue.staus === 'Working' && newValue.status === 'Completed') {
+    if(oldValue.status === 'Working' && newValue.status === 'Completed') {
         return db.doc('leaderboard/'+userId).update({points : admin.firestore.FieldValue.increment(35)});
     }
 });
@@ -64,7 +64,7 @@ exports.decrementPointForReportRemoval = docRef.onDelete((snapshot, context) => 
     if(data.status === 'Working') {
         pointsDeducted -= 15
     } else if (data.status === 'Completed') {
-        pointsDeducted -= 35
+        pointsDeducted -= 50
     }
 
     return db.doc('leaderboard/'+userId).update({points: admin.firestore.FieldValue.increment(pointsDeducted)});
