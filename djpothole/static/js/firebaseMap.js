@@ -23,6 +23,7 @@ fdb.where("status", "in", ["Reported", "Working"]).onSnapshot(querySnapshot => {
     ],
     13
   );
+  
   L.tileLayer(
     "https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}",
     {
@@ -34,14 +35,8 @@ fdb.where("status", "in", ["Reported", "Working"]).onSnapshot(querySnapshot => {
         "pk.eyJ1Ijoic3JpamFuczM4IiwiYSI6ImNqemN3cHRodzAyb2ozZG94YXZwN3VkMWYifQ.pszoH4JN8jktAkXtDl40wQ"
     }
   ).addTo(mymap);
+  
 
-  var mymap = L.map("mapid").setView(
-    [
-      filteredDocuments[0].data().location.latitude,
-      filteredDocuments[0].data().location.longitude
-    ],
-    13
-  );
   L.tileLayer(
     "https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}",
     {
@@ -53,7 +48,7 @@ fdb.where("status", "in", ["Reported", "Working"]).onSnapshot(querySnapshot => {
         "pk.eyJ1Ijoic3JpamFuczM4IiwiYSI6ImNqemN3cHRodzAyb2ozZG94YXZwN3VkMWYifQ.pszoH4JN8jktAkXtDl40wQ"
     }
   ).addTo(mymap);
-
+ 
   const lat = filteredDocuments.map(doc => {
     return doc.data().location[0];
   });
