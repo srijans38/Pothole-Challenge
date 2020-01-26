@@ -15,7 +15,8 @@ fdb.where("status", "in", ["Reported", "Working"]).onSnapshot(querySnapshot => {
   filteredDocuments.sort((a, b) => {
     return b.data().occurrence - a.data().occurrence;
   });
-
+  if(filteredDocuments[0])
+  {
   var mymap = L.map("mapid").setView(
     [
       filteredDocuments[0].data().location[0],
@@ -23,7 +24,15 @@ fdb.where("status", "in", ["Reported", "Working"]).onSnapshot(querySnapshot => {
     ],
     13
   );
+  }
+  else{
+    var mymap = L.map("mapid").setView(
+      [21.251645, 81.633970
+      ],
+      13
+    );
   
+  }
   L.tileLayer(
     "https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}",
     {
