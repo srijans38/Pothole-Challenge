@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_progress_hud/flutter_progress_hud.dart';
 import 'package:provider/provider.dart';
-import 'package:sih_test/services/auth_widget.dart';
-import 'package:sih_test/services/firebase_storage_service.dart';
 import 'package:sih_test/services/firestore_service.dart';
 
 class ReportScreen extends StatefulWidget {
@@ -91,14 +89,8 @@ class _ReportScreenState extends State<ReportScreen> {
                     progress.showWithText('Deleting...');
                     await Provider.of<FirestoreService>(context)
                         .deleteReport(widget.report.id, widget.report.uid[0]);
-                    await Provider.of<FirebaseStorageService>(context)
-                        .deleteImage(widget.report.imageRef);
-                    await Future.delayed(Duration(seconds: 5));
                     progress.dismiss();
-                    Navigator.pushAndRemoveUntil(
-                        context,
-                        MaterialPageRoute(builder: (context) => AuthWidget()),
-                        (Route route) => false);
+                    Navigator.pop(context);
                   },
                 )
               ],

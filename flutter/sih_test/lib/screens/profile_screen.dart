@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sih_test/screens/test.dart';
 import 'package:sih_test/services/firebase_auth_service.dart';
 import 'package:sih_test/services/firestore_service.dart';
 import 'package:sih_test/utils/report_box.dart';
@@ -11,6 +12,11 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  String getInitials() {
+    var name = Provider.of<User>(context).displayName.split(' ');
+    return ('${name[0][0]}${name[1][0]}'.toUpperCase());
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -36,12 +42,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
             children: <Widget>[
               IconButton(
                 onPressed: () async {
-                  var reports = await Provider.of<FirestoreService>(context,
-                          listen: false)
-                      .getReports();
-                  reports.forEach((e) {
-                    print(e.id);
-                  });
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => TestScreen()));
                 },
                 icon: Icon(
                   Icons.add_circle,
@@ -76,16 +78,50 @@ class _ProfileScreenState extends State<ProfileScreen> {
               SizedBox(
                 height: MediaQuery.of(context).size.height / 30,
               ),
-              CircleAvatar(
-                radius: 80.0,
-                backgroundColor: Colors.grey.withOpacity(0.5),
+              Stack(
+                alignment: Alignment.center,
+                children: <Widget>[
+                  CircleAvatar(
+                    radius: 80.0,
+                    backgroundColor:
+                        Provider.of<User>(context).displayName != null
+                            ? Colors.blue
+                            : Colors.grey.withOpacity(0.5),
+                    child: Provider.of<User>(context).displayName != null
+                        ? Text(
+                            getInitials(),
+                            style: TextStyle(fontSize: 40.0),
+                          )
+                        : null,
+                  ),
+                  Positioned(
+                      top: 0,
+                      right: MediaQuery.of(context).size.width / 3 - 20,
+                      child: RawMaterialButton(
+                        onPressed: () {},
+                        fillColor: Colors.blue,
+                        padding: EdgeInsets.all(12.0),
+                        constraints: BoxConstraints(),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30.0),
+                            side: BorderSide(
+                                color: ThemeData.light().canvasColor,
+                                width: 3.0)),
+                        child: Icon(
+                          Icons.camera_alt,
+                          color: Colors.white,
+                          size: 30.0,
+                        ),
+                      )),
+                ],
               ),
               SizedBox(
                 height: MediaQuery.of(context).size.height / 20,
               ),
               Center(
                 child: Text(
-                  Provider.of<User>(context).email ??
+                  Provider.of<User>(context).displayName ??
+                      Provider.of<User>(context).email ??
                       Provider.of<User>(context).phoneNo,
                   style: TextStyle(fontSize: 20.0, fontFamily: 'Montserrat'),
                 ),
@@ -94,13 +130,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 height: MediaQuery.of(context).size.height / 40,
               ),
               Center(
-                child: FutureBuilder<DocumentSnapshot>(
-                  future: Provider.of<FirestoreService>(context)
+                child: StreamBuilder<DocumentSnapshot>(
+                  stream: Provider.of<FirestoreService>(context)
                       .getPointsByUser(Provider.of<User>(context).uid),
                   builder: (context, snapshot) {
-                    if (snapshot.hasData) {
+                    if (snapshot.hasData ? snapshot.data.data != null : false) {
+                      print(snapshot.data.data);
                       final level =
-                          (snapshot.data.data['points'] / 20).floor() + 1;
+                          (snapshot.data.data['points'] / 100).floor() + 1;
                       return Column(
                         children: <Widget>[
                           Center(
