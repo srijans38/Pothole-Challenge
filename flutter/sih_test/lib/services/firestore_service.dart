@@ -11,6 +11,7 @@ class Report {
   final String status;
   final String feedback;
   final int occurrence;
+  final List labels;
 
   Report({
     this.imageRef,
@@ -23,6 +24,7 @@ class Report {
     this.status,
     this.feedback,
     this.occurrence,
+    this.labels,
   });
 
   factory Report.fromMap(Map data, String id) {
@@ -30,13 +32,14 @@ class Report {
       id: id,
       imageRef: data['image'],
       landmark: data['landmark'],
-      location: GeoPoint(data['location'][0], data['location'][1]),
+      location: data['location'],
       timestamp: data['timestamp'],
       uid: data['uid'],
       region: data['region'],
       status: data['status'],
       feedback: data['feedback'],
       occurrence: data['occurrence'],
+      labels: data['labels'],
     ));
   }
 
@@ -44,13 +47,14 @@ class Report {
     return {
       'image': this.imageRef,
       'landmark': this.landmark,
-      'location': [this.location.latitude, this.location.longitude],
+      'location': this.location,
       'timestamp': this.timestamp,
       'uid': this.uid,
       'region': this.region,
       'status': this.status,
       'feedback': this.feedback,
       'occurrence': this.occurrence,
+      'labels': this.labels,
     };
   }
 }

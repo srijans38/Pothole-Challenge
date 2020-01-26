@@ -1,12 +1,12 @@
 import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_ml_vision/firebase_ml_vision.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_progress_hud/flutter_progress_hud.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
-import 'package:sih_test/services/auth_widget.dart';
 import 'package:sih_test/services/firestore_service.dart';
 import 'package:sih_test/utils/text_field.dart';
 
@@ -14,8 +14,10 @@ class UploadBottomModal extends StatefulWidget {
   final String imageRef;
   final String uid;
   final BuildContext progressContext;
+  final String imagePath;
 
-  UploadBottomModal({this.imageRef, this.uid, this.progressContext});
+  UploadBottomModal(
+      {this.imageRef, this.uid, this.progressContext, this.imagePath});
 
   @override
   _UploadBottomModalState createState() => _UploadBottomModalState();
@@ -23,6 +25,21 @@ class UploadBottomModal extends StatefulWidget {
 
 class _UploadBottomModalState extends State<UploadBottomModal> {
   String landmark;
+  FirebaseVisionImage visionImage;
+  final ImageLabeler labeler = FirebaseVision.instance
+      .imageLabeler(ImageLabelerOptions(confidenceThreshold: 0.7));
+  List<Map<String, dynamic>> _labels = [];
+
+  List<Map> labelsToMap(List<ImageLabel> labels) {
+    List<Map<String, dynamic>> mapLabels = [];
+    labels.forEach((e) {
+      mapLabels.add({
+        'label': '${e.text}',
+        'confidence': '${e.confidence}',
+      });
+    });
+    return mapLabels;
+  }
 
   @override
   void initState() {
@@ -67,6 +84,11 @@ class _UploadBottomModalState extends State<UploadBottomModal> {
                 Navigator.pop(context);
                 final progress = ProgressHUD.of(widget.progressContext);
                 progress.showWithText('Uploading...');
+                visionImage =
+                    FirebaseVisionImage.fromFilePath(widget.imagePath);
+                final labels = await labeler.processImage(visionImage);
+                _labels = labelsToMap(labels);
+                print(_labels);
                 Position position = await Geolocator().getCurrentPosition();
                 Map geocode;
                 String region;
@@ -74,15 +96,20 @@ class _UploadBottomModalState extends State<UploadBottomModal> {
                   var regionJson = await http.get(
                       'https://www.geocode.xyz/${position.latitude},${position.longitude}?json=1');
                   geocode = json.decode(regionJson.body);
-                  region = geocode['staddress'] +
+                  region = geocode['staddress'].toString() +
                       ',' +
-                      geocode['poi']['name'] +
+                      geocode['city'].toString() +
                       ',' +
-                      geocode['poi']['addr-street'];
+                      geocode['poi']['name'].toString() +
+                      ',' +
+                      geocode['poi']['addr-street'].toString();
                   print(region);
                 } catch (e) {
                   print(e);
-                  region = 'Unknown';
+                  region = geocode['city'].toString() +
+                      ',' +
+                      geocode['region'].toString();
+                  print(region);
                 }
                 final report = Report(
                   uid: [widget.uid],
@@ -93,6 +120,7 @@ class _UploadBottomModalState extends State<UploadBottomModal> {
                   timestamp: Timestamp.now(),
                   status: 'Reported',
                   occurrence: 1,
+                  labels: _labels,
                 );
                 Provider.of<FirestoreService>(widget.progressContext,
                         listen: false)
@@ -100,10 +128,7 @@ class _UploadBottomModalState extends State<UploadBottomModal> {
                     .then((value) {
                   print(value.path);
                   progress.dismiss();
-                  Navigator.pushAndRemoveUntil(
-                      widget.progressContext,
-                      MaterialPageRoute(builder: (context) => AuthWidget()),
-                      (Route route) => false);
+                  Navigator.pop(widget.progressContext);
                 });
               },
               child: Text(
