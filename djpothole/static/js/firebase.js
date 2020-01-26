@@ -20,13 +20,13 @@ fdb.where("status", "in", ["Reported", "Working"]).onSnapshot(querySnapshot => {
   a.innerHTML = "";
   chart.data.datasets[0].data[1] = filteredDocuments.length.toString();
   chart.update();
-  filteredDocuments.forEach(data => {
-    var li = document.createElement("a");
-    li.className = "list-group-item list-group-item-action";
-    li.innerHTML = `<h1>${data.data().occurrence}</h1>`;
-    li.href = "" + data.id;
-    a.appendChild(li);
-  });
+  // filteredDocuments.forEach(data => {
+  //   var li = document.createElement("a");
+  //   li.className = "list-group-item list-group-item-action";
+  //   li.innerHTML = `<h1>${data.data().occurrence}</h1>`;
+  //   li.href = "" + data.id;
+  //   a.appendChild(li);
+  // });
 });
 fdb = db.collection("reports");
 fdb.where("status", "in", ["Completed"]).onSnapshot(querySnapshot => {

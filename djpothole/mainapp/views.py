@@ -35,16 +35,21 @@ def update_ever_logged_in(req):
         'registration/password_change_done.html',
     )
 
+
 def mapview(req):
-    context={'user':req.user}
-    return render(
-        req,
-        'mainapp/map_view.html',
-        context=context
-    )
+    context = {'user': req.user}
+    return render(req, 'mainapp/map_view.html', context=context)
+
 
 def feedbackview(req):
     return render(
         req,
         'mainapp/feedback_view.html',
+    )
+
+
+def listview(req):
+    return render(
+        req,
+        'mainapp/list_page.html',
     )

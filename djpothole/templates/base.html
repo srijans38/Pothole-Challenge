@@ -12,7 +12,10 @@
       rel="stylesheet"
       href="{% static 'bootstrap/css/bootstrap.min.css' %}"
     />
-    <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
+    <link
+      href="https://fonts.googleapis.com/css?family=Montserrat&display=swap"
+      rel="stylesheet"
+    />
 
     <link
       rel="stylesheet"
@@ -22,7 +25,10 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css"
     />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/hover.css/2.3.1/css/hover-min.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/hover.css/2.3.1/css/hover-min.css"
+    />
   </head>
 
   <body id="page-top">
@@ -51,6 +57,11 @@
             <li class="nav-item" role="presentation">
               <a class="nav-link active" href="{% url 'mainapp:feedbackview' %}"
                 ><span>FEEDBACK</span></a
+              >
+            </li>
+            <li class="nav-item" role="presentation">
+              <a class="nav-link active" href="{% url 'mainapp:listview' %}"
+                ><span>REPORTS</span></a
               >
             </li>
             <li class="nav-item" role="presentation">
