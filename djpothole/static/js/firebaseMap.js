@@ -19,8 +19,8 @@ fdb.where("status", "in", ["Reported", "Working"]).onSnapshot(querySnapshot => {
   {
   var mymap = L.map("mapid").setView(
     [
-      filteredDocuments[0].data().location[0],
-      filteredDocuments[0].data().location[1]
+      filteredDocuments[0].data().location.latitude,
+      filteredDocuments[0].data().location.longitude
     ],
     13
   );
@@ -59,10 +59,10 @@ fdb.where("status", "in", ["Reported", "Working"]).onSnapshot(querySnapshot => {
   ).addTo(mymap);
  
   const lat = filteredDocuments.map(doc => {
-    return doc.data().location[0];
+    return doc.data().location.latitude;
   });
   const long = filteredDocuments.map(doc => {
-    return doc.data().location[1];
+    return doc.data().location.longitude;
   });
   for (i = 0; i < lat.length; i++) {
     var marker = L.marker([lat[i], long[i]], { icon: potholeMarker }).addTo(
