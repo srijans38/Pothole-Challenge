@@ -13,8 +13,12 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   String getInitials() {
-    var name = Provider.of<User>(context).displayName.split(' ');
-    return ('${name[0][0]}${name[1][0]}'.toUpperCase());
+    var initials = Provider.of<User>(context).displayName.split(' ');
+    String name = '';
+    for (var initial in initials) {
+      name += initial[0].toString();
+    }
+    return name.toUpperCase();
   }
 
   @override
@@ -187,7 +191,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     .getReportsByUser(Provider.of<User>(context).uid),
                 builder: (context, snapshot) {
                   final _loader = FutureBuilder(
-                      future: Future.delayed(Duration(seconds: 5)),
+                      future: Future.delayed(Duration(seconds: 2)),
                       builder: (context, snapshot) {
                         if (snapshot.connectionState == ConnectionState.done) {
                           print('Done');

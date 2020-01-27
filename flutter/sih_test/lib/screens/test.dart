@@ -15,7 +15,8 @@ class TestScreen extends StatefulWidget {
 class _TestScreenState extends State<TestScreen> {
   File imageFile;
   FirebaseVisionImage visionImage;
-  final ImageLabeler labeler = FirebaseVision.instance.imageLabeler();
+  final ImageLabeler labeler = FirebaseVision.instance
+      .imageLabeler(ImageLabelerOptions(confidenceThreshold: 0.7));
   List<ImageLabel> _labels = [];
 
   @override

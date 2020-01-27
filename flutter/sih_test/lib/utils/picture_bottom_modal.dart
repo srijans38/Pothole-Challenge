@@ -86,6 +86,7 @@ class _PictureBottomModalState extends State<PictureBottomModal> {
                                         imageRef: imageRef,
                                         uid: user.uid,
                                         progressContext: widget.progressContext,
+                                        imagePath: widget.imagePath,
                                       )),
                                 );
                               });
@@ -121,6 +122,7 @@ class _PictureBottomModalState extends State<PictureBottomModal> {
                       ),
                       color: Colors.redAccent,
                       onPressed: () {
+                        File(widget.imagePath).delete();
                         Navigator.pop(context);
                       },
                       child: Row(
