@@ -33,6 +33,7 @@ fdb.where("status", "in", ["Reported", "Working"]).onSnapshot(querySnapshot => {
     );
   
   }
+
   L.tileLayer(
     "https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}",
     {
@@ -43,7 +44,7 @@ fdb.where("status", "in", ["Reported", "Working"]).onSnapshot(querySnapshot => {
       accessToken:
         "pk.eyJ1Ijoic3JpamFuczM4IiwiYSI6ImNqemN3cHRodzAyb2ozZG94YXZwN3VkMWYifQ.pszoH4JN8jktAkXtDl40wQ"
     }
-  ).addTo(mymap);
+  ).addTo(mymap)
   
 
   L.tileLayer(
@@ -65,7 +66,8 @@ fdb.where("status", "in", ["Reported", "Working"]).onSnapshot(querySnapshot => {
     return doc.data().location.longitude;
   });
   for (i = 0; i < lat.length; i++) {
-    var marker = L.marker([lat[i], long[i]], { icon: potholeMarker }).addTo(
+    var marker = L.marker([lat[i], long[i]], { icon: potholeMarker })
+    .addTo(
       mymap
     );
   }
