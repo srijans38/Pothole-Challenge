@@ -1,3 +1,4 @@
+import 'package:bubble_bottom_bar/bubble_bottom_bar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -35,30 +36,70 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: IndexedStack(
-        index: _currentIndex,
-        children: _children,
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        onTap: onBottomTapped,
-        currentIndex: _currentIndex,
-        backgroundColor: ThemeData.light().canvasColor,
-        items: [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            title: Text('Home'),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.people),
-            title: Text('Leaderboard'),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            title: Text('Profile'),
-          ),
-        ],
-      ),
-    );
+        body: IndexedStack(
+          index: _currentIndex,
+          children: _children,
+        ),
+        bottomNavigationBar: BubbleBottomBar(
+          hasInk: true,
+          iconSize: 24.0,
+          currentIndex: _currentIndex,
+          onTap: onBottomTapped,
+          opacity: 0.2,
+          borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+          elevation: 50,
+          hasNotch: true,
+          items: <BubbleBottomBarItem>[
+            BubbleBottomBarItem(
+                backgroundColor: Colors.blue,
+                icon: Icon(
+                  Icons.dashboard,
+                  color: Colors.black,
+                ),
+                activeIcon: Icon(
+                  Icons.dashboard,
+                  color: Colors.blue,
+                ),
+                title: Text(
+                  "Home",
+                  style: TextStyle(
+                    fontFamily: 'Montserrat',
+                  ),
+                )),
+            BubbleBottomBarItem(
+                backgroundColor: Colors.blue,
+                icon: Icon(
+                  Icons.format_list_numbered,
+                  color: Colors.black,
+                ),
+                activeIcon: Icon(
+                  Icons.format_list_numbered,
+                  color: Colors.blue,
+                ),
+                title: Text(
+                  "Leaderboard",
+                  style: TextStyle(
+                    fontFamily: 'Montserrat',
+                  ),
+                )),
+            BubbleBottomBarItem(
+                backgroundColor: Colors.blue,
+                icon: Icon(
+                  Icons.person,
+                  color: Colors.black,
+                ),
+                activeIcon: Icon(
+                  Icons.person,
+                  color: Colors.blue,
+                ),
+                title: Text(
+                  "Profile",
+                  style: TextStyle(
+                    fontFamily: 'Montserrat',
+                  ),
+                )),
+          ],
+        ));
   }
 }
 
