@@ -57,9 +57,13 @@ fdb.where("status", "in", ["Reported", "Working"]).onSnapshot(querySnapshot => {
   const long = filteredDocuments.map(doc => {
     return doc.data().location.longitude;
   });
-  for (i = 0; i < lat.length; i++) {
-    var marker = L.marker([lat[i], long[i]], { icon: potholeMarker }).addTo(
-      mymap
-    );
-  }
+
+  filteredDocuments.forEach((doc)=>{
+    var marker = L.marker([doc.data().location.latitude,doc.data().location.longitude], {icon : potholeMarker})
+    .on('click',()=>{
+   window.location.href=`/mainapp/list/${doc.id}`
+    })
+    .addTo(mymap);
+ })
+
 });

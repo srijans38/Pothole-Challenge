@@ -17,7 +17,8 @@
    crossorigin=""></script>
 
 <div class="jumbotron" id="mapid"></div>
-
+<script src="{% static 'js/firebaseinit.js' %}"></script>
+<script src="{% static 'js/firebaseMap.js' %}"></script>
 <style>#mapid { height: 600px;
  margin-left: 10px;margin-bottom: 30px;margin-right:10px; }
 </style>
@@ -29,65 +30,6 @@
     iconSize: [60],
     iconAnchor: [20, 20]
     })
-
-
-    //firebase
-  var firebaseConfig = {
-  apiKey: "AIzaSyAdyRhmquuWcLqF5F9xFhiwfvRsjvWnEtc",
-  authDomain: "sih-test-8c936.firebaseapp.com",
-  databaseURL: "https://sih-test-8c936.firebaseio.com",
-  projectId: "sih-test-8c936",
-  storageBucket: "sih-test-8c936.appspot.com",
-  messagingSenderId: "209924411187",
-  appId: "1:209924411187:web:2d1279bbd788bd2351f846"
-};
-// Initialize Firebase
-firebase.initializeApp(firebaseConfig);
-var db = firebase.firestore();
-var fdb=db.collection("reports");
-fdb.where("status","in",['Reported','Working'])
-  .onSnapshot(querySnapshot => {
-    const documents = [];
-    querySnapshot.forEach(doc => {
-      const d = doc;
-      documents.push(d);
-    });
-    var filteredDocuments = documents.filter(docu => {
-      return docu
-        .data()
-        .region.toLowerCase()
-        .includes(user.toLowerCase());
-    });
-    filteredDocuments.sort((a, b) => {
-      return b.data().occurrence - a.data().occurrence;
-    });
-
-    var mymap = L.map('mapid').setView([filteredDocuments[0].data().location.latitude, filteredDocuments[0].data().location.longitude], 13);
-    L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
-        attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-        maxZoom: 18,
-        id: 'mapbox.dark',
-        accessToken: 'pk.eyJ1Ijoic3JpamFuczM4IiwiYSI6ImNqemN3cHRodzAyb2ozZG94YXZwN3VkMWYifQ.pszoH4JN8jktAkXtDl40wQ'
-    }).addTo(mymap);
-
-
-    const lat=filteredDocuments.map((doc)=>{
-        return doc.data().location.latitude
-    })
-    const long=filteredDocuments.map((doc)=>{
-        return doc.data().location.longitude
-    })
-
-    filteredDocuments.forEach((doc)=>{
-       var marker = L.marker([doc.data().location.latitude,doc.data().location.longitude], {icon : potholeMarker})
-       .on('click',()=>{
-      window.location.href=`/mainapp/list/${doc.id}`
-       })
-       .addTo(mymap);
-    })
-});
-
-
 </script>
 {% else %}
 <script>
