@@ -21,13 +21,14 @@ class _ReportScreenState extends State<ReportScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: true,
+      resizeToAvoidBottomPadding: true,
       body: ProgressHUD(
           barrierEnabled: true,
           backgroundColor: Colors.blue.withOpacity(0.8),
-          child: Builder(
-            builder: (context) {
-              _buildContext = context; 
-              return Column(
+          child: Builder(builder: (context) {
+            _buildContext = context;
+            return Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
@@ -68,7 +69,10 @@ class _ReportScreenState extends State<ReportScreen> {
                       ),
                       IconButton(
                         onPressed: () async {
-                          Share.text('Pothole Report', 'Hey! I reported a new pothole at ${widget.report.location.latitude}, ${widget.report.location.longitude}', 'text/plain');
+                          Share.text(
+                              'Pothole Report',
+                              'Hey! I reported a new pothole at ${widget.report.location.latitude}, ${widget.report.location.longitude}',
+                              'text/plain');
                         },
                         icon: Icon(
                           Icons.share,
@@ -91,12 +95,28 @@ class _ReportScreenState extends State<ReportScreen> {
                 RaisedButton(
                   child: Text('Add Feedback'),
                   onPressed: () async {
-                    showBottomSheet(context: context, builder: (context) {
-                      return FeedbackBottomModal(
-                        progressContext: context,
-                        reportId: widget.report.id,
-                      );
-                    });
+                    showModalBottomSheet(
+                        context: context,
+                        isScrollControlled: true,
+                        isDismissible: false,
+                        builder: (context) {
+                          return Padding(
+                            padding: MediaQuery.of(context).viewInsets,
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.only(
+                                  topRight: Radius.circular(25.0),
+                                  topLeft: Radius.circular(25.0),
+                                ),
+                              ),
+                              child: FeedbackBottomModal(
+                                progressContext: context,
+                                reportId: widget.report.id,
+                              ),
+                            ),
+                          );
+                        });
                   },
                 ),
                 RaisedButton(
@@ -112,8 +132,7 @@ class _ReportScreenState extends State<ReportScreen> {
                 )
               ],
             );
-            }
-          )),
+          })),
     );
   }
 }

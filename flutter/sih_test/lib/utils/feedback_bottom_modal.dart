@@ -54,7 +54,9 @@ class _FeedbackBottomModalState extends State<FeedbackBottomModal> {
                 Navigator.pop(context);
                 final progress = ProgressHUD.of(widget.progressContext);
                 progress.showWithText('Uploading...');
-                Provider.of<FirestoreService>(context).uploadFeedback(feedback, widget.reportId).then((value) {
+                Provider.of<FirestoreService>(context)
+                    .uploadFeedback(feedback, widget.reportId)
+                    .then((value) {
                   progress.dismiss();
                 });
               },
