@@ -83,6 +83,13 @@ class FirestoreService {
         .snapshots();
   }
 
+  Stream<QuerySnapshot> getLeaderboard() {
+    return _firestore
+        .collection('leaderboard')
+        .orderBy('points', descending: true)
+        .snapshots();
+  }
+
   Future<DocumentReference> uploadReport(Report report) async {
     return await _firestore.collection('reports').add(report.toMap());
   }
