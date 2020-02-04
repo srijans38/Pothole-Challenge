@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_progress_hud/flutter_progress_hud.dart';
 import 'package:provider/provider.dart';
 import 'package:sih_test/services/firestore_service.dart';
+import 'package:sih_test/utils/feedback_bottom_modal.dart';
 
 class ReportScreen extends StatefulWidget {
   final Report report;
@@ -23,7 +24,9 @@ class _ReportScreenState extends State<ReportScreen> {
           barrierEnabled: true,
           backgroundColor: Colors.blue.withOpacity(0.8),
           child: Builder(
-            builder: (context) => Column(
+            builder: (context) {
+              _buildContext = context; 
+              return Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
@@ -83,6 +86,17 @@ class _ReportScreenState extends State<ReportScreen> {
                   ),
                 ),
                 RaisedButton(
+                  child: Text('Add Feedback'),
+                  onPressed: () async {
+                    showBottomSheet(context: context, builder: (context) {
+                      return FeedbackBottomModal(
+                        progressContext: context,
+                        reportId: widget.report.id,
+                      );
+                    });
+                  },
+                ),
+                RaisedButton(
                   child: Text('Delete'),
                   onPressed: () async {
                     final progress = ProgressHUD.of(context);
@@ -94,7 +108,8 @@ class _ReportScreenState extends State<ReportScreen> {
                   },
                 )
               ],
-            ),
+            );
+            }
           )),
     );
   }

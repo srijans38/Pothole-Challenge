@@ -90,6 +90,11 @@ class FirestoreService {
         .snapshots();
   }
 
+  Future<void> uploadFeedback(String feedback, String reportId) async {
+    final data = {'feedback' : feedback};
+    return await _firestore.collection('reports').document(reportId).updateData(data);
+  }
+
   Future<DocumentReference> uploadReport(Report report) async {
     return await _firestore.collection('reports').add(report.toMap());
   }
