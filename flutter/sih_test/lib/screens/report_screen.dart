@@ -1,3 +1,4 @@
+import 'package:esys_flutter_share/esys_flutter_share.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_progress_hud/flutter_progress_hud.dart';
 import 'package:provider/provider.dart';
@@ -66,9 +67,11 @@ class _ReportScreenState extends State<ReportScreen> {
                         ),
                       ),
                       IconButton(
-                        onPressed: () async {},
+                        onPressed: () async {
+                          Share.text('Pothole Report', 'Hey! I reported a new pothole at ${widget.report.location.latitude}, ${widget.report.location.longitude}', 'text/plain');
+                        },
                         icon: Icon(
-                          Icons.exit_to_app,
+                          Icons.share,
                           size: 25.0,
                         ),
                       ),
