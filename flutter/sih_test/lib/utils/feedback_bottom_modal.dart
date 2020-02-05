@@ -52,12 +52,9 @@ class _FeedbackBottomModalState extends State<FeedbackBottomModal> {
               color: Colors.blueAccent,
               onPressed: () async {
                 Navigator.pop(context);
-                final progress = ProgressHUD.of(widget.progressContext);
-                progress.showWithText('Uploading...');
                 Provider.of<FirestoreService>(context)
                     .uploadFeedback(feedback, widget.reportId)
                     .then((value) {
-                  progress.dismiss();
                 });
               },
               child: Text(
