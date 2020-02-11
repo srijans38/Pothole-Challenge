@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sih_test/services/auth_widget.dart';
@@ -5,7 +8,16 @@ import 'package:sih_test/services/firebase_auth_service.dart';
 import 'package:sih_test/services/firebase_storage_service.dart';
 import 'package:sih_test/services/firestore_service.dart';
 
-void main() => runApp(MyApp());
+void _setPlatform() {
+  if (Platform.isLinux || Platform.isWindows) {
+    debugDefaultTargetPlatformOverride = TargetPlatform.fuchsia;
+  }
+}
+
+void main() {
+  _setPlatform();
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
   @override
