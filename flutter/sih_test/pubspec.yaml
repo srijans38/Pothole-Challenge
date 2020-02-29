@@ -23,7 +23,7 @@ dependencies:
   firebase_core_web:
   firebase_auth:
   firebase_auth_web:
-  cloud_firestore:
+  cloud_firestore: ^0.13.2
   google_sign_in:
   google_sign_in_web:
   flare_flutter:
