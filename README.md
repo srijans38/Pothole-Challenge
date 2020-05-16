@@ -1,4 +1,4 @@
-# sih-test
+# Pothole Challenge
 Test
 /*Idea Description*/
 To facilitate the connection between the civil agencies and civilians, we propose a social media like application where the users can report a pothole by taking a picture of the pothole and providing a suitable landmark. More suitable information will be automatically collected using various _ of the device. This info will include:
